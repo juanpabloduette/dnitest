@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h2>Escanea el código del DNI</h2>
+    <h2>Escanea el código del DNI ya</h2>
     <button id="btnEscanear">Escanear DNI</button>
     <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
     <div id="video-container">
@@ -62,7 +62,6 @@
         let linternaEncendida = false;
 
         btnEscanear.addEventListener("click", () => {
-            recuadro.style.display = "block";
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                 .then(s => {
                     stream = s;
@@ -71,6 +70,7 @@
                     videoElement.play();
                     btnLinterna.style.display = "inline";
                     track = stream.getVideoTracks()[0];
+                    recuadro.style.display = "block";
 
                     codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
                         if (result) {
