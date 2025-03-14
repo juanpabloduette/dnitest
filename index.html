@@ -1,124 +1,130 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escáner DNI Argentina</title>
-    <style>
-        #video-container {
-            position: relative;
-            display: inline-block;
-        }
-        #recuadro {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 100px;
-            background-color: transparent;
-            border: 1px solid white;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            display: none;
-        }
-        video {
-            display: block;
-            width: 100%;
-            max-width: 450px;
-        }
-    </style>
-</head>
-<body>
-    <h2>Escanea el código del DNI ya</h2>
-    <button id="btnEscanear">Escanear DNI</button>
-    <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
-    <div id="video-container">
-        <video id="video" style="display: none;" autoplay></video>
-        <div id="recuadro"></div>
-    </div>
-    <p><strong>Resultado:</strong> <span id="resultado"></span></p>
-    <p><strong>Apellido:</strong> <span id="apellido"></span></p>
-    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-    <p><strong>DNI:</strong> <span id="dni"></span></p>
-    <p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Escáner DNI Argentina</title>
+		<style>
+			#video-container {
+				position: relative;
+				display: inline-block;
+			}
+			#recuadro {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 300px;
+				height: 100px;
+				background-color: transparent;
+				border: 1px solid white;
+				transform: translate(-50%, -50%);
+				pointer-events: none;
+				display: none;
+			}
+			video {
+				display: block;
+				width: 100%;
+				max-width: 450px;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Entregar certificado de subasta</h2>
+		<button id="btnEscanear">Escanear DNI</button>
+		<button id="btnLinterna" style="display: none">🔦 Linterna</button>
+		<div id="video-container">
+			<video id="video" style="display: none" autoplay></video>
+			<div id="recuadro"></div>
+		</div>
+		<p><strong>Resultado:</strong> <span id="resultado"></span></p>
+		<p><strong>Apellido:</strong> <span id="apellido"></span></p>
+		<p><strong>Nombre:</strong> <span id="nombre"></span></p>
+		<p><strong>DNI:</strong> <span id="dni"></span></p>
+		<p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p>
 
-    <script type="module">
-        import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm';
+		<script type="module">
+			import { BrowserMultiFormatReader } from "https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm";
 
-        const codeReader = new BrowserMultiFormatReader();
-        const videoElement = document.getElementById("video");
-        const resultadoElement = document.getElementById("resultado");
-        const btnEscanear = document.getElementById("btnEscanear");
-        const btnLinterna = document.getElementById("btnLinterna");
-        const recuadro = document.getElementById("recuadro");
+			const codeReader = new BrowserMultiFormatReader();
+			const videoElement = document.getElementById("video");
+			const resultadoElement = document.getElementById("resultado");
+			const btnEscanear = document.getElementById("btnEscanear");
+			const btnLinterna = document.getElementById("btnLinterna");
+			const recuadro = document.getElementById("recuadro");
 
-        const apellidoElement = document.getElementById("apellido");
-        const nombreElement = document.getElementById("nombre");
-        const dniElement = document.getElementById("dni");
-        const fechaEmisionElement = document.getElementById("fechaEmision");
+			const apellidoElement = document.getElementById("apellido");
+			const nombreElement = document.getElementById("nombre");
+			const dniElement = document.getElementById("dni");
+			const fechaEmisionElement = document.getElementById("fechaEmision");
 
-        let stream = null;
-        let track = null;
-        let linternaEncendida = false;
+			let stream = null;
+			let track = null;
+			let linternaEncendida = false;
 
-        btnEscanear.addEventListener("click", () => {
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                .then(s => {
-                    stream = s;
-                    videoElement.srcObject = stream;
-                    videoElement.style.display = "block";
-                    videoElement.play();
-                    btnLinterna.style.display = "inline";
-                    track = stream.getVideoTracks()[0];
-                    recuadro.style.display = "block";
+			btnEscanear.addEventListener("click", () => {
+				navigator.mediaDevices
+					.getUserMedia({ video: { facingMode: "environment" } })
+					.then((s) => {
+						stream = s;
+						videoElement.srcObject = stream;
+						videoElement.style.display = "block";
+						videoElement.play();
+						btnLinterna.style.display = "inline";
+						track = stream.getVideoTracks()[0];
+						recuadro.style.display = "block";
 
-                    codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
-                        if (result) {
-                            const datos = result.text;
-                            resultadoElement.textContent = datos;
+						codeReader.decodeFromVideoDevice(
+							undefined,
+							videoElement,
+							(result, err) => {
+								if (result) {
+									const datos = result.text;
+									resultadoElement.textContent = datos;
 
-                            const partes = datos.split("@");
-                            if (partes.length >= 9) {
-                                apellidoElement.textContent = partes[1];
-                                nombreElement.textContent = partes[2];
-                                dniElement.textContent = partes[4];
-                                fechaEmisionElement.textContent = partes[7];
-                            }
+									const partes = datos.split("@");
+									if (partes.length >= 9) {
+										apellidoElement.textContent = partes[1];
+										nombreElement.textContent = partes[2];
+										dniElement.textContent = partes[4];
+										fechaEmisionElement.textContent = partes[7];
+									}
 
-                            console.log("Código detectado:", datos);
-                            detenerEscaneo();
-                            codeReader.reset();
-                        }
-                    });
-                })
-                .catch(err => console.error("Error accediendo a la cámara:", err));
-        });
+									console.log("Código detectado:", datos);
+									detenerEscaneo();
+									codeReader.reset();
+								}
+							}
+						);
+					})
+					.catch((err) => console.error("Error accediendo a la cámara:", err));
+			});
 
-        btnLinterna.addEventListener("click", () => {
-            if (track) {
-                linternaEncendida = !linternaEncendida;
-                track.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
-                    .then(() => console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`))
-                    .catch(err => console.error("No se pudo activar la linterna:", err));
-            }
-        });
+			btnLinterna.addEventListener("click", () => {
+				if (track) {
+					linternaEncendida = !linternaEncendida;
+					track
+						.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
+						.then(() =>
+							console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`)
+						)
+						.catch((err) => console.error("No se pudo activar la linterna:", err));
+				}
+			});
 
-        function detenerEscaneo() {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-            }
+			function detenerEscaneo() {
+				if (stream) {
+					stream.getTracks().forEach((track) => track.stop());
+					stream = null;
+				}
 
-            videoElement.srcObject = null;
-            videoElement.style.display = "none";
-            btnLinterna.style.display = "none";
-            linternaEncendida = false;
-            recuadro.style.display = "none";
-            console.log("Cámara apagada y escaneo detenido.");
-            alert("Escaneo completado, cámara apagada.");
-        }
-    </script>
-</body>
+				videoElement.srcObject = null;
+				videoElement.style.display = "none";
+				btnLinterna.style.display = "none";
+				linternaEncendida = false;
+				recuadro.style.display = "none";
+				console.log("Cámara apagada y escaneo detenido.");
+				alert("Escaneo completado, cámara apagada.");
+			}
+		</script>
+	</body>
 </html>
-
-
