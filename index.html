@@ -5,6 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Escáner DNI Argentina</title>
 		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #1c1c3c;
+				color: #dfdfdf;
+			}
 			#video-container {
 				position: relative;
 				display: inline-block;
@@ -85,14 +92,14 @@
 							(result, err) => {
 								if (result) {
 									const datos = result.text;
-									resultadoElement.textContent = datos;
+									// resultadoElement.textContent = datos;
 
 									const partes = datos.split("@");
 									if (partes.length >= 9) {
 										apellidoElement.textContent = partes[1];
 										nombreElement.textContent = partes[2];
 										dniElement.textContent = partes[4];
-										fechaEmisionElement.textContent = partes[7];
+										// fechaEmisionElement.textContent = partes[7];
 									}
 
 									console.log("Código detectado:", datos);
