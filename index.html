@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escáner DNI Argentina</title>
+</head>
+<body>
+    <h2>Escanea el código de barras del DNI</h2>
+    <button id="btnEscanear">Escanear DNI</button>
+    <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
+    <p><strong>Resultado:</strong> <span id="resultado"></span></p>
+
+    <script type="module">
+        import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm';
+
+        const codeReader = new BrowserMultiFormatReader();
+        const videoElement = document.getElementById("video");
+        const resultadoElement = document.getElementById("resultado");
+        const btnEscanear = document.getElementById("btnEscanear");
+
+        btnEscanear.addEventListener("click", () => {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(stream => {
+                    videoElement.srcObject = stream;
+                    videoElement.style.display = "block"; // Muestra el video
+                    videoElement.play();
+
+                    codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
+                        if (result) {
+                            resultadoElement.textContent = result.text;
+                            console.log("Código escaneado:", result.text);
+
+                            // Detener la cámara después de escanear
+                            stream.getTracks().forEach(track => track.stop());
+                            videoElement.style.display = "none"; // Oculta el video
+                        }
+                    });
+                })
+                .catch(err => console.error("Error accediendo a la cámara:", err));
+        });
+    </script>
+</body>
+</html>
