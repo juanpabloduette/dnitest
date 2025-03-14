@@ -85,6 +85,16 @@
 
                             // Detener la cámara después de escanear
                             detenerEscaneo();
+
+                            // Apagar la linterna si está encendida
+                            if (track && linternaEncendida) {
+                                track.applyConstraints({ advanced: [{ torch: false }] })
+                                    .then(() => {
+                                        linternaEncendida = false;
+                                        console.log("Linterna apagada después del escaneo.");
+                                    })
+                                    .catch(err => console.error("No se pudo apagar la linterna:", err));
+                            }
                         }
                     });
                 })
@@ -111,3 +121,4 @@
     </script>
 </body>
 </html>
+
