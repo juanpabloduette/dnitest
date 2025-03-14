@@ -18,8 +18,8 @@
             background-color: transparent;
             border: 1px solid white;
             transform: translate(-50%, -50%);
-            pointer-events: none; /* Esto asegura que el recuadro no interfiera con el video */
-            display: none; /* Inicialmente el recuadro está oculto */
+            pointer-events: none;
+            display: none;
         }
         video {
             display: block;
@@ -52,7 +52,6 @@
         const btnLinterna = document.getElementById("btnLinterna");
         const recuadro = document.getElementById("recuadro");
 
-        // Elementos donde se mostrarán los valores extraídos
         const apellidoElement = document.getElementById("apellido");
         const nombreElement = document.getElementById("nombre");
         const dniElement = document.getElementById("dni");
@@ -63,14 +62,14 @@
         let linternaEncendida = false;
 
         btnEscanear.addEventListener("click", () => {
-            recuadro.style.display = "block"; // Mostrar el recuadro al empezar a escanear
+            recuadro.style.display = "block";
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                 .then(s => {
                     stream = s;
                     videoElement.srcObject = stream;
                     videoElement.style.display = "block";
                     videoElement.play();
-                    btnLinterna.style.display = "inline"; // Mostrar botón de linterna
+                    btnLinterna.style.display = "inline";
                     track = stream.getVideoTracks()[0];
 
                     codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
@@ -78,54 +77,17 @@
                             const datos = result.text;
                             resultadoElement.textContent = datos;
 
-                            // Separar los datos por "@"
                             const partes = datos.split("@");
-
                             if (partes.length >= 9) {
-                                const nroTramite = partes[0];
-                                const apellido = partes[1];
-                                const nombre = partes[2];
-                                const sexo = partes[3];
-                                const dni = partes[4];
-                                const ejemplar = partes[5];
-                                const fechaNacimiento = partes[6];
-                                const fechaEmision = partes[7];
-                                const dniUltimoDato = partes[8];
-
-                                // Asignar valores a las variables
-                                apellidoElement.textContent = apellido;
-                                nombreElement.textContent = nombre;
-                                dniElement.textContent = dni;
-                                fechaEmisionElement.textContent = fechaEmision;
-   
-                                console.log("Número de Trámite:", nroTramite);
-                                console.log("Apellido:", apellido);
-                                console.log("Nombre:", nombre);
-                                console.log("Sexo:", sexo);
-                                console.log("DNI:", dni);
-                                console.log("Ejemplar:", ejemplar);
-                                console.log("Fecha de Nacimiento:", fechaNacimiento);
-                                console.log("Fecha de Emisión:", fechaEmision);
-                                console.log("Último Dato:", dniUltimoDato);
-                            } else {
-                                console.error("Formato de datos incorrecto.");
+                                apellidoElement.textContent = partes[1];
+                                nombreElement.textContent = partes[2];
+                                dniElement.textContent = partes[4];
+                                fechaEmisionElement.textContent = partes[7];
                             }
 
-                            // Detener la cámara después de escanear
+                            console.log("Código detectado:", datos);
                             detenerEscaneo();
-
-                            // Apagar la linterna si está encendida
-                            if (track && linternaEncendida) {
-                                track.applyConstraints({ advanced: [{ torch: false }] })
-                                    .then(() => {
-                                        linternaEncendida = false;
-                                        console.log("Linterna apagada después del escaneo.");
-                                    })
-                                    .catch(err => console.error("No se pudo apagar la linterna:", err));
-                            }
-
-                            // Ocultar el recuadro después de encontrar el escaneo
-                            recuadro.style.display = "none";
+                            codeReader.reset();
                         }
                     });
                 })
@@ -142,38 +104,19 @@
         });
 
         function detenerEscaneo() {
-    if (stream) {
-        stream.getTracks().forEach(track => {
-            track.stop();  // Detenemos cada pista de video/audio
-            stream.removeTrack(track);  // Eliminamos la pista del stream
-        });
-        stream = null;
-    }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
 
-    // Limpiar el objeto del video completamente
-    videoElement.srcObject = null;
-    videoElement.removeAttribute("src");
-    videoElement.style.display = "none";
-    videoElement.load();  // Recargar el elemento de video
-
-    // Ocultar botones
-    btnLinterna.style.display = "none";
-    linternaEncendida = false;
-
-    // 🚀 **FORZAR CIERRE DE LA CÁMARA** 🚀
-    setTimeout(() => {
-        navigator.mediaDevices.getUserMedia({ video: true })  // Pedimos acceso de nuevo
-            .then(newStream => {
-                newStream.getTracks().forEach(track => track.stop()); // Lo cerramos inmediatamente
-            })
-            .catch(err => console.log("Error liberando cámara:", err));
-    }, 1000);  // Pequeña espera para que el navegador detecte el cambio
-
-    console.log("Cámara apagada y acceso revocado.");
-    alert("Camara apagada?")
-}
-
-
+            videoElement.srcObject = null;
+            videoElement.style.display = "none";
+            btnLinterna.style.display = "none";
+            linternaEncendida = false;
+            
+            console.log("Cámara apagada y escaneo detenido.");
+            alert("Escaneo completado, cámara apagada.");
+        }
     </script>
 </body>
 </html>
