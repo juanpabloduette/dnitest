@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h2>Escanea el código del DNI ahora</h2>
+    <h2>Escanea el código del DNI</h2>
     <button id="btnEscanear">Escanear DNI</button>
     <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
     <div id="video-container">
@@ -144,30 +144,34 @@
         function detenerEscaneo() {
     if (stream) {
         stream.getTracks().forEach(track => {
-            track.stop();  // Detener cada pista (video/audio)
+            track.stop();  // Detenemos cada pista de video/audio
+            stream.removeTrack(track);  // Eliminamos la pista del stream
         });
-        stream = null; // Eliminar referencia al stream
+        stream = null;
     }
 
-    // Limpiar completamente el video
+    // Limpiar el objeto del video completamente
     videoElement.srcObject = null;
     videoElement.removeAttribute("src");
     videoElement.style.display = "none";
-    videoElement.load();
+    videoElement.load();  // Recargar el elemento de video
 
     // Ocultar botones
     btnLinterna.style.display = "none";
     linternaEncendida = false;
 
-    // 🚀 🚀 🚀 Revocar permisos temporalmente 🚀 🚀 🚀
-    navigator.mediaDevices.getUserMedia({ video: false }) // Esto fuerza la liberación de la cámara
-        .then(stream => {
-            stream.getTracks().forEach(track => track.stop());
-        })
-        .catch(err => console.log("Error forzando la liberación de la cámara:", err));
+    // 🚀 **FORZAR CIERRE DE LA CÁMARA** 🚀
+    setTimeout(() => {
+        navigator.mediaDevices.getUserMedia({ video: true })  // Pedimos acceso de nuevo
+            .then(newStream => {
+                newStream.getTracks().forEach(track => track.stop()); // Lo cerramos inmediatamente
+            })
+            .catch(err => console.log("Error liberando cámara:", err));
+    }, 1000);  // Pequeña espera para que el navegador detecte el cambio
 
-    console.log("Cámara apagada y permisos revocados.");
+    console.log("Cámara apagada y acceso revocado.");
 }
+
 
     </script>
 </body>
