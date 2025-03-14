@@ -10,15 +10,10 @@
     <button id="btnEscanear">Escanear DNI</button>
     <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
     <p><strong>Resultado:</strong> <span id="resultado"></span></p>
-    <p><strong>Nro Trámite:</strong> <span id="nroTramite"></span></p>
     <p><strong>Apellido:</strong> <span id="apellido"></span></p>
     <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-    <p><strong>Sexo:</strong> <span id="sexo"></span></p>
     <p><strong>DNI:</strong> <span id="dni"></span></p>
-    <p><strong>Ejemplar:</strong> <span id="ejemplar"></span></p>
-    <p><strong>Fecha Nacimiento:</strong> <span id="fechaNacimiento"></span></p>
     <p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p>
-    <p><strong>Último Dato:</strong> <span id="dniUltimoDato"></span></p>
 
     <script type="module">
         import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm';
@@ -29,15 +24,10 @@
         const btnEscanear = document.getElementById("btnEscanear");
 
         // Elementos donde se mostrarán los valores extraídos
-        const nroTramiteElement = document.getElementById("nroTramite");
         const apellidoElement = document.getElementById("apellido");
         const nombreElement = document.getElementById("nombre");
-        const sexoElement = document.getElementById("sexo");
         const dniElement = document.getElementById("dni");
-        const ejemplarElement = document.getElementById("ejemplar");
-        const fechaNacimientoElement = document.getElementById("fechaNacimiento");
         const fechaEmisionElement = document.getElementById("fechaEmision");
-        const dniUltimoDatoElement = document.getElementById("dniUltimoDato");
 
         btnEscanear.addEventListener("click", () => {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
@@ -66,16 +56,11 @@
                                 const dniUltimoDato = partes[8];
 
                                 // Asignar valores a las variables
-                                nroTramiteElement.textContent = nroTramite;
                                 apellidoElement.textContent = apellido;
                                 nombreElement.textContent = nombre;
-                                sexoElement.textContent = sexo;
                                 dniElement.textContent = dni;
-                                ejemplarElement.textContent = ejemplar;
-                                fechaNacimientoElement.textContent = fechaNacimiento;
                                 fechaEmisionElement.textContent = fechaEmision;
-                                dniUltimoDatoElement.textContent = dniUltimoDato;
-
+   
                                 console.log("Número de Trámite:", nroTramite);
                                 console.log("Apellido:", apellido);
                                 console.log("Nombre:", nombre);
