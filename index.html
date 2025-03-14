@@ -1,102 +1,113 @@
-<script type="module">
-    import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escáner DNI Argentina</title>
+</head>
+<body>
+    <h2>Escanea el código de barras del DNI</h2>
+    <button id="btnEscanear">Escanear DNI</button>
+    <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
+    <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
+    <p><strong>Resultado:</strong> <span id="resultado"></span></p>
+    <p><strong>Apellido:</strong> <span id="apellido"></span></p>
+    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+    <p><strong>DNI:</strong> <span id="dni"></span></p>
+    <p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p>
 
-    const codeReader = new BrowserMultiFormatReader();
-    const videoElement = document.getElementById("video");
-    const resultadoElement = document.getElementById("resultado");
-    const btnEscanear = document.getElementById("btnEscanear");
-    const btnLinterna = document.getElementById("btnLinterna");
+    <script type="module">
+        import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm';
 
-    // Elementos donde se mostrarán los valores extraídos
-    const apellidoElement = document.getElementById("apellido");
-    const nombreElement = document.getElementById("nombre");
-    const dniElement = document.getElementById("dni");
-    const fechaEmisionElement = document.getElementById("fechaEmision");
+        const codeReader = new BrowserMultiFormatReader();
+        const videoElement = document.getElementById("video");
+        const resultadoElement = document.getElementById("resultado");
+        const btnEscanear = document.getElementById("btnEscanear");
+        const btnLinterna = document.getElementById("btnLinterna");
 
-    let stream = null;
-    let track = null;
-    let linternaEncendida = false;
+        // Elementos donde se mostrarán los valores extraídos
+        const apellidoElement = document.getElementById("apellido");
+        const nombreElement = document.getElementById("nombre");
+        const dniElement = document.getElementById("dni");
+        const fechaEmisionElement = document.getElementById("fechaEmision");
 
-    btnEscanear.addEventListener("click", () => {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-            .then(s => {
-                stream = s;
-                videoElement.srcObject = stream;
-                videoElement.style.display = "block";
-                videoElement.play();
-                btnLinterna.style.display = "inline"; // Mostrar botón de linterna
-                track = stream.getVideoTracks()[0];
+        let stream = null;
+        let track = null;
+        let linternaEncendida = false;
 
-                codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
-                    if (result) {
-                        const datos = result.text;
-                        resultadoElement.textContent = datos;
+        btnEscanear.addEventListener("click", () => {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(s => {
+                    stream = s;
+                    videoElement.srcObject = stream;
+                    videoElement.style.display = "block";
+                    videoElement.play();
+                    btnLinterna.style.display = "inline"; // Mostrar botón de linterna
+                    track = stream.getVideoTracks()[0];
 
-                        // Separar los datos por "@"
-                        const partes = datos.split("@");
+                    codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
+                        if (result) {
+                            const datos = result.text;
+                            resultadoElement.textContent = datos;
 
-                        if (partes.length >= 9) {
-                            const nroTramite = partes[0];
-                            const apellido = partes[1];
-                            const nombre = partes[2];
-                            const sexo = partes[3];
-                            const dni = partes[4];
-                            const ejemplar = partes[5];
-                            const fechaNacimiento = partes[6];
-                            const fechaEmision = partes[7];
-                            const dniUltimoDato = partes[8];
+                            // Separar los datos por "@"
+                            const partes = datos.split("@");
 
-                            // Asignar valores a las variables
-                            apellidoElement.textContent = apellido;
-                            nombreElement.textContent = nombre;
-                            dniElement.textContent = dni;
-                            fechaEmisionElement.textContent = fechaEmision;
+                            if (partes.length >= 9) {
+                                const nroTramite = partes[0];
+                                const apellido = partes[1];
+                                const nombre = partes[2];
+                                const sexo = partes[3];
+                                const dni = partes[4];
+                                const ejemplar = partes[5];
+                                const fechaNacimiento = partes[6];
+                                const fechaEmision = partes[7];
+                                const dniUltimoDato = partes[8];
 
-                            console.log("Número de Trámite:", nroTramite);
-                            console.log("Apellido:", apellido);
-                            console.log("Nombre:", nombre);
-                            console.log("Sexo:", sexo);
-                            console.log("DNI:", dni);
-                            console.log("Ejemplar:", ejemplar);
-                            console.log("Fecha de Nacimiento:", fechaNacimiento);
-                            console.log("Fecha de Emisión:", fechaEmision);
-                            console.log("Último Dato:", dniUltimoDato);
-                        } else {
-                            console.error("Formato de datos incorrecto.");
+                                // Asignar valores a las variables
+                                apellidoElement.textContent = apellido;
+                                nombreElement.textContent = nombre;
+                                dniElement.textContent = dni;
+                                fechaEmisionElement.textContent = fechaEmision;
+   
+                                console.log("Número de Trámite:", nroTramite);
+                                console.log("Apellido:", apellido);
+                                console.log("Nombre:", nombre);
+                                console.log("Sexo:", sexo);
+                                console.log("DNI:", dni);
+                                console.log("Ejemplar:", ejemplar);
+                                console.log("Fecha de Nacimiento:", fechaNacimiento);
+                                console.log("Fecha de Emisión:", fechaEmision);
+                                console.log("Último Dato:", dniUltimoDato);
+                            } else {
+                                console.error("Formato de datos incorrecto.");
+                            }
+
+                            // Detener la cámara después de escanear
+                            detenerEscaneo();
                         }
+                    });
+                })
+                .catch(err => console.error("Error accediendo a la cámara:", err));
+        });
 
-                        // Detener la cámara después de escanear
-                        detenerEscaneo();
-                    }
-                });
-            })
-            .catch(err => console.error("Error accediendo a la cámara:", err));
-    });
+        btnLinterna.addEventListener("click", () => {
+            if (track) {
+                linternaEncendida = !linternaEncendida;
+                track.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
+                    .then(() => console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`))
+                    .catch(err => console.error("No se pudo activar la linterna:", err));
+            }
+        });
 
-    btnLinterna.addEventListener("click", () => {
-        if (track) {
-            linternaEncendida = !linternaEncendida;
-            track.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
-                .then(() => console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`))
-                .catch(err => console.error("No se pudo activar la linterna:", err));
-        }
-    });
-
-    function detenerEscaneo() {
-        if (track) {
-            // Apagar la linterna antes de detener la cámara
-            track.applyConstraints({ advanced: [{ torch: false }] })
-                .catch(err => console.error("No se pudo apagar la linterna:", err));
-        }
-
-        if (stream) {
-            setTimeout(() => {
+        function detenerEscaneo() {
+            if (stream) {
                 stream.getTracks().forEach(t => t.stop());
-                videoElement.style.display = "none";
-                btnLinterna.style.display = "none";
-                linternaEncendida = false;
-            }, 200); // Pequeña espera para asegurar que se apaga la linterna
+            }
+            videoElement.style.display = "none";
+            btnLinterna.style.display = "none";
+            linternaEncendida = false;
         }
-    }
-</script>
-
+    </script>
+</body>
+</html>
