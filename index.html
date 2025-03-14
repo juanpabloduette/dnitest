@@ -12,6 +12,9 @@
 				background-color: #1c1c3c;
 				color: #dfdfdf;
 			}
+			h2 {
+				text-align: center;
+			}
 			#video-container {
 				position: relative;
 				display: inline-block;
@@ -31,7 +34,7 @@
 			video {
 				display: block;
 				width: 100%;
-				max-width: 450px;
+				max-width: 350px;
 			}
 		</style>
 	</head>
@@ -43,11 +46,11 @@
 			<video id="video" style="display: none" autoplay></video>
 			<div id="recuadro"></div>
 		</div>
-		<p><strong>Resultado:</strong> <span id="resultado"></span></p>
+		<!-- <p><strong>Resultado:</strong> <span id="resultado"></span></p> -->
 		<p><strong>Apellido:</strong> <span id="apellido"></span></p>
 		<p><strong>Nombre:</strong> <span id="nombre"></span></p>
 		<p><strong>DNI:</strong> <span id="dni"></span></p>
-		<p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p>
+		<!-- <p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p> -->
 
 		<script type="module">
 			import { BrowserMultiFormatReader } from "https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm";
@@ -136,7 +139,7 @@
 				linternaEncendida = false;
 				recuadro.style.display = "none";
 				console.log("Cámara apagada y escaneo detenido.");
-				alert("Escaneo completado, cámara apagada.");
+				// alert("Escaneo completado, cámara apagada.");
 			}
 		</script>
 	</body>
