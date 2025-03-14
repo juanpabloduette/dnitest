@@ -4,12 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escáner DNI Argentina</title>
+    <style>
+        #video-container {
+            position: relative;
+            display: inline-block;
+        }
+        #recuadro {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 100px;
+            background-color: transparent;
+            border: 1px solid white;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
     <h2>Escanea el código de barras del DNI</h2>
     <button id="btnEscanear">Escanear DNI</button>
     <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
-    <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
+    <div id="video-container">
+        <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
+        <div id="recuadro"></div>
+    </div>
     <p><strong>Resultado:</strong> <span id="resultado"></span></p>
     <p><strong>Apellido:</strong> <span id="apellido"></span></p>
     <p><strong>Nombre:</strong> <span id="nombre"></span></p>
@@ -62,63 +81,6 @@
                                 const ejemplar = partes[5];
                                 const fechaNacimiento = partes[6];
                                 const fechaEmision = partes[7];
-                                const dniUltimoDato = partes[8];
+                    
 
-                                // Asignar valores a las variables
-                                apellidoElement.textContent = apellido;
-                                nombreElement.textContent = nombre;
-                                dniElement.textContent = dni;
-                                fechaEmisionElement.textContent = fechaEmision;
-   
-                                console.log("Número de Trámite:", nroTramite);
-                                console.log("Apellido:", apellido);
-                                console.log("Nombre:", nombre);
-                                console.log("Sexo:", sexo);
-                                console.log("DNI:", dni);
-                                console.log("Ejemplar:", ejemplar);
-                                console.log("Fecha de Nacimiento:", fechaNacimiento);
-                                console.log("Fecha de Emisión:", fechaEmision);
-                                console.log("Último Dato:", dniUltimoDato);
-                            } else {
-                                console.error("Formato de datos incorrecto.");
-                            }
-
-                            // Detener la cámara después de escanear
-                            detenerEscaneo();
-
-                            // Apagar la linterna si está encendida
-                            if (track && linternaEncendida) {
-                                track.applyConstraints({ advanced: [{ torch: false }] })
-                                    .then(() => {
-                                        linternaEncendida = false;
-                                        console.log("Linterna apagada después del escaneo.");
-                                    })
-                                    .catch(err => console.error("No se pudo apagar la linterna:", err));
-                            }
-                        }
-                    });
-                })
-                .catch(err => console.error("Error accediendo a la cámara:", err));
-        });
-
-        btnLinterna.addEventListener("click", () => {
-            if (track) {
-                linternaEncendida = !linternaEncendida;
-                track.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
-                    .then(() => console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`))
-                    .catch(err => console.error("No se pudo activar la linterna:", err));
-            }
-        });
-
-        function detenerEscaneo() {
-            if (stream) {
-                stream.getTracks().forEach(t => t.stop());
-            }
-            videoElement.style.display = "none";
-            btnLinterna.style.display = "none";
-            linternaEncendida = false;
-        }
-    </script>
-</body>
-</html>
 
