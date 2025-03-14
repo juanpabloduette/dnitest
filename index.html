@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h2>Escanea el código del DNI</h2>
+    <h2>Escanea el código del DNI ahora</h2>
     <button id="btnEscanear">Escanear DNI</button>
     <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
     <div id="video-container">
@@ -143,31 +143,31 @@
 
         function detenerEscaneo() {
     if (stream) {
-        // Detener todas las pistas activas (video y audio)
         stream.getTracks().forEach(track => {
-            track.stop();
-            stream.removeTrack(track); // Eliminamos la pista del stream
+            track.stop();  // Detener cada pista (video/audio)
         });
-
-        // Eliminamos cualquier referencia al stream
-        stream = null;
+        stream = null; // Eliminar referencia al stream
     }
 
-    // Limpiar el objeto del video de manera más agresiva
-    videoElement.pause();
+    // Limpiar completamente el video
     videoElement.srcObject = null;
-    videoElement.removeAttribute("src"); 
-    videoElement.load(); // Forzar recarga del video
-
-    // Ocultar los elementos visuales
+    videoElement.removeAttribute("src");
     videoElement.style.display = "none";
+    videoElement.load();
+
+    // Ocultar botones
     btnLinterna.style.display = "none";
     linternaEncendida = false;
 
-    console.log("Cámara apagada correctamente.");
+    // 🚀 🚀 🚀 Revocar permisos temporalmente 🚀 🚀 🚀
+    navigator.mediaDevices.getUserMedia({ video: false }) // Esto fuerza la liberación de la cámara
+        .then(stream => {
+            stream.getTracks().forEach(track => track.stop());
+        })
+        .catch(err => console.log("Error forzando la liberación de la cámara:", err));
+
+    console.log("Cámara apagada y permisos revocados.");
 }
-
-
 
     </script>
 </body>
