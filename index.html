@@ -143,22 +143,37 @@
 
         function detenerEscaneo() {
     if (stream) {
-        // Detenemos todas las pistas del stream
+        // Detener todas las pistas del stream
         stream.getTracks().forEach(track => {
-            track.stop();
+            track.stop();  // Detenemos cada pista (video o audio)
         });
-        // Establecemos el stream a null para asegurar que no siga consumiendo recursos
-        stream = null;
+        stream = null;  // Limpiamos la referencia al stream
     }
 
-    // Limpiar el objeto de video
+    // Limpiar el objeto del video
     videoElement.srcObject = null;
 
     // Ocultar el video y otros elementos
     videoElement.style.display = "none";
     btnLinterna.style.display = "none";
     linternaEncendida = false;
+
+    // Enumeramos todos los dispositivos para asegurarnos de que la cámara se libere
+    navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+            devices.forEach(device => {
+                if (device.kind === 'videoinput') {
+                    navigator.mediaDevices.getUserMedia({ video: { deviceId: device.deviceId } })
+                        .then(stream => {
+                            stream.getTracks().forEach(track => track.stop()); // Aseguramos que el dispositivo no quede activo
+                        })
+                        .catch(err => console.error("Error deteniendo dispositivo:", err));
+                }
+            });
+        })
+        .catch(err => console.error("Error enumerando dispositivos:", err));
 }
+
 
     </script>
 </body>
