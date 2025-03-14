@@ -142,13 +142,17 @@
         });
 
         function detenerEscaneo() {
-            if (stream) {
-                stream.getTracks().forEach(t => t.stop());
-            }
-            videoElement.style.display = "none";
-            btnLinterna.style.display = "none";
-            linternaEncendida = false;
-        }
+        if (stream) {
+        // Detener todas las pistas del stream
+        stream.getTracks().forEach(track => {
+            track.stop();  // Detenemos cada pista (video o audio)
+        });
+    }
+    // Ocultar el video y otros elementos
+    videoElement.style.display = "none";
+    btnLinterna.style.display = "none";
+    linternaEncendida = false;
+}
     </script>
 </body>
 </html>
