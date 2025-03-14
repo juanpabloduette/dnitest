@@ -141,18 +141,22 @@
             }
         });
 
-        function detenerEscaneo() {
+    function detenerEscaneo() {
         if (stream) {
-        // Detener todas las pistas del stream
-        stream.getTracks().forEach(track => {
-            track.stop();  // Detenemos cada pista (video o audio)
-        });
+            // Detener todas las pistas del stream
+            stream.getTracks().forEach(track => {
+                track.stop();  // Detenemos cada pista (video o audio)
+            });
+        }
+
+        // Limpiar el objeto del video
+        videoElement.srcObject = null;
+
+        // Ocultar el video y otros elementos
+        videoElement.style.display = "none";
+        btnLinterna.style.display = "none";
+        linternaEncendida = false;
     }
-    // Ocultar el video y otros elementos
-    videoElement.style.display = "none";
-    btnLinterna.style.display = "none";
-    linternaEncendida = false;
-}
     </script>
 </body>
 </html>
