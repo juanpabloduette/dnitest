@@ -10,6 +10,15 @@
     <button id="btnEscanear">Escanear DNI</button>
     <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
     <p><strong>Resultado:</strong> <span id="resultado"></span></p>
+    <p><strong>Nro Trámite:</strong> <span id="nroTramite"></span></p>
+    <p><strong>Apellido:</strong> <span id="apellido"></span></p>
+    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+    <p><strong>Sexo:</strong> <span id="sexo"></span></p>
+    <p><strong>DNI:</strong> <span id="dni"></span></p>
+    <p><strong>Ejemplar:</strong> <span id="ejemplar"></span></p>
+    <p><strong>Fecha Nacimiento:</strong> <span id="fechaNacimiento"></span></p>
+    <p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p>
+    <p><strong>Último Dato:</strong> <span id="dniUltimoDato"></span></p>
 
     <script type="module">
         import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm';
@@ -18,6 +27,17 @@
         const videoElement = document.getElementById("video");
         const resultadoElement = document.getElementById("resultado");
         const btnEscanear = document.getElementById("btnEscanear");
+
+        // Elementos donde se mostrarán los valores extraídos
+        const nroTramiteElement = document.getElementById("nroTramite");
+        const apellidoElement = document.getElementById("apellido");
+        const nombreElement = document.getElementById("nombre");
+        const sexoElement = document.getElementById("sexo");
+        const dniElement = document.getElementById("dni");
+        const ejemplarElement = document.getElementById("ejemplar");
+        const fechaNacimientoElement = document.getElementById("fechaNacimiento");
+        const fechaEmisionElement = document.getElementById("fechaEmision");
+        const dniUltimoDatoElement = document.getElementById("dniUltimoDato");
 
         btnEscanear.addEventListener("click", () => {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
@@ -28,8 +48,46 @@
 
                     codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
                         if (result) {
-                            resultadoElement.textContent = result.text;
-                            console.log("Código escaneado:", result.text);
+                            const datos = result.text;
+                            resultadoElement.textContent = datos;
+
+                            // Separar los datos por "@"
+                            const partes = datos.split("@");
+
+                            if (partes.length >= 9) {
+                                const nroTramite = partes[0];
+                                const apellido = partes[1];
+                                const nombre = partes[2];
+                                const sexo = partes[3];
+                                const dni = partes[4];
+                                const ejemplar = partes[5];
+                                const fechaNacimiento = partes[6];
+                                const fechaEmision = partes[7];
+                                const dniUltimoDato = partes[8];
+
+                                // Asignar valores a las variables
+                                nroTramiteElement.textContent = nroTramite;
+                                apellidoElement.textContent = apellido;
+                                nombreElement.textContent = nombre;
+                                sexoElement.textContent = sexo;
+                                dniElement.textContent = dni;
+                                ejemplarElement.textContent = ejemplar;
+                                fechaNacimientoElement.textContent = fechaNacimiento;
+                                fechaEmisionElement.textContent = fechaEmision;
+                                dniUltimoDatoElement.textContent = dniUltimoDato;
+
+                                console.log("Número de Trámite:", nroTramite);
+                                console.log("Apellido:", apellido);
+                                console.log("Nombre:", nombre);
+                                console.log("Sexo:", sexo);
+                                console.log("DNI:", dni);
+                                console.log("Ejemplar:", ejemplar);
+                                console.log("Fecha de Nacimiento:", fechaNacimiento);
+                                console.log("Fecha de Emisión:", fechaEmision);
+                                console.log("Último Dato:", dniUltimoDato);
+                            } else {
+                                console.error("Formato de datos incorrecto.");
+                            }
 
                             // Detener la cámara después de escanear
                             stream.getTracks().forEach(track => track.stop());
