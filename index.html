@@ -63,7 +63,12 @@
 
 			btnEscanear.addEventListener("click", () => {
 				navigator.mediaDevices
-					.getUserMedia({ video: { facingMode: "environment" } })
+			             .getUserMedia({
+			     video: {
+			         facingMode: "environment",
+			         width: { ideal: 1920 },  // Aumenta la resolución
+			         height: { ideal: 1080 }
+			     }
 					.then((s) => {
 						stream = s;
 						videoElement.srcObject = stream;
