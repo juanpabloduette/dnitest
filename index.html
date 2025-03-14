@@ -81,6 +81,62 @@
                                 const ejemplar = partes[5];
                                 const fechaNacimiento = partes[6];
                                 const fechaEmision = partes[7];
-                    
+                                const dniUltimoDato = partes[8];
 
+                                // Asignar valores a las variables
+                                apellidoElement.textContent = apellido;
+                                nombreElement.textContent = nombre;
+                                dniElement.textContent = dni;
+                                fechaEmisionElement.textContent = fechaEmision;
+   
+                                console.log("Número de Trámite:", nroTramite);
+                                console.log("Apellido:", apellido);
+                                console.log("Nombre:", nombre);
+                                console.log("Sexo:", sexo);
+                                console.log("DNI:", dni);
+                                console.log("Ejemplar:", ejemplar);
+                                console.log("Fecha de Nacimiento:", fechaNacimiento);
+                                console.log("Fecha de Emisión:", fechaEmision);
+                                console.log("Último Dato:", dniUltimoDato);
+                            } else {
+                                console.error("Formato de datos incorrecto.");
+                            }
 
+                            // Detener la cámara después de escanear
+                            detenerEscaneo();
+
+                            // Apagar la linterna si está encendida
+                            if (track && linternaEncendida) {
+                                track.applyConstraints({ advanced: [{ torch: false }] })
+                                    .then(() => {
+                                        linternaEncendida = false;
+                                        console.log("Linterna apagada después del escaneo.");
+                                    })
+                                    .catch(err => console.error("No se pudo apagar la linterna:", err));
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.error("Error accediendo a la cámara:", err));
+        });
+
+        btnLinterna.addEventListener("click", () => {
+            if (track) {
+                linternaEncendida = !linternaEncendida;
+                track.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
+                    .then(() => console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`))
+                    .catch(err => console.error("No se pudo activar la linterna:", err));
+            }
+        });
+
+        function detenerEscaneo() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+            }
+            videoElement.style.display = "none";
+            btnLinterna.style.display = "none";
+            linternaEncendida = false;
+        }
+    </script>
+</body>
+</html>
