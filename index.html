@@ -8,6 +8,7 @@
 <body>
     <h2>Escanea el código de barras del DNI</h2>
     <button id="btnEscanear">Escanear DNI</button>
+    <button id="btnLinterna" style="display: none;">🔦 Linterna</button>
     <video id="video" style="width: 100%; max-width: 400px; display: none;" autoplay></video>
     <p><strong>Resultado:</strong> <span id="resultado"></span></p>
     <p><strong>Apellido:</strong> <span id="apellido"></span></p>
@@ -22,6 +23,7 @@
         const videoElement = document.getElementById("video");
         const resultadoElement = document.getElementById("resultado");
         const btnEscanear = document.getElementById("btnEscanear");
+        const btnLinterna = document.getElementById("btnLinterna");
 
         // Elementos donde se mostrarán los valores extraídos
         const apellidoElement = document.getElementById("apellido");
@@ -29,12 +31,19 @@
         const dniElement = document.getElementById("dni");
         const fechaEmisionElement = document.getElementById("fechaEmision");
 
+        let stream = null;
+        let track = null;
+        let linternaEncendida = false;
+
         btnEscanear.addEventListener("click", () => {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                .then(stream => {
+                .then(s => {
+                    stream = s;
                     videoElement.srcObject = stream;
-                    videoElement.style.display = "block"; // Muestra el video
+                    videoElement.style.display = "block";
                     videoElement.play();
+                    btnLinterna.style.display = "inline"; // Mostrar botón de linterna
+                    track = stream.getVideoTracks()[0];
 
                     codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
                         if (result) {
@@ -75,13 +84,30 @@
                             }
 
                             // Detener la cámara después de escanear
-                            stream.getTracks().forEach(track => track.stop());
-                            videoElement.style.display = "none"; // Oculta el video
+                            detenerEscaneo();
                         }
                     });
                 })
                 .catch(err => console.error("Error accediendo a la cámara:", err));
         });
+
+        btnLinterna.addEventListener("click", () => {
+            if (track) {
+                linternaEncendida = !linternaEncendida;
+                track.applyConstraints({ advanced: [{ torch: linternaEncendida }] })
+                    .then(() => console.log(`Linterna ${linternaEncendida ? "encendida" : "apagada"}`))
+                    .catch(err => console.error("No se pudo activar la linterna:", err));
+            }
+        });
+
+        function detenerEscaneo() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+            }
+            videoElement.style.display = "none";
+            btnLinterna.style.display = "none";
+            linternaEncendida = false;
+        }
     </script>
 </body>
 </html>
