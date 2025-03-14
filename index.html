@@ -107,25 +107,27 @@
                                 console.log("Fecha de Nacimiento:", fechaNacimiento);
                                 console.log("Fecha de Emisión:", fechaEmision);
                                 console.log("Último Dato:", dniUltimoDato);
+
+                                // Detener la cámara después de escanear
+                                detenerEscaneo();
+
+                                // Apagar la linterna si está encendida
+                                if (track && linternaEncendida) {
+                                    track.applyConstraints({ advanced: [{ torch: false }] })
+                                        .then(() => {
+                                            linternaEncendida = false;
+                                            console.log("Linterna apagada después del escaneo.");
+                                        })
+                                        .catch(err => console.error("No se pudo apagar la linterna:", err));
+                                }
+
+                                // Ocultar el recuadro después de encontrar el escaneo
+                                recuadro.style.display = "none";
                             } else {
                                 console.error("Formato de datos incorrecto.");
                             }
-
-                            // Detener la cámara después de escanear
-                            detenerEscaneo();
-
-                            // Apagar la linterna si está encendida
-                            if (track && linternaEncendida) {
-                                track.applyConstraints({ advanced: [{ torch: false }] })
-                                    .then(() => {
-                                        linternaEncendida = false;
-                                        console.log("Linterna apagada después del escaneo.");
-                                    })
-                                    .catch(err => console.error("No se pudo apagar la linterna:", err));
-                            }
-
-                            // Ocultar el recuadro después de encontrar el escaneo
-                            recuadro.style.display = "none";
+                        } else if (err && !(err instanceof ZXing.NotFoundException)) {
+                            console.error("Error de escaneo:", err);
                         }
                     });
                 })
@@ -143,14 +145,17 @@
 
         function detenerEscaneo() {
             if (stream) {
-                stream.getTracks().forEach(t => t.stop());
+                // Detener cada pista de la transmisión de la cámara
+                stream.getTracks().forEach(track => track.stop());
             }
-            videoElement.style.display = "none";
-            btnLinterna.style.display = "none";
-            linternaEncendida = false;
+            videoElement.style.display = "none"; // Ocultar el video
+            btnLinterna.style.display = "none"; // Ocultar el botón de linterna
+            linternaEncendida = false; // Asegurar que la linterna está apagada
+            stream = null; // Limpiar el stream para evitar problemas futuros
         }
     </script>
 </body>
 </html>
+
 
 
