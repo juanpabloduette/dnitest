@@ -350,6 +350,26 @@
 					alert("Debes firmar antes de aceptar.");
 				}
 			}
+
+			document.addEventListener("DOMContentLoaded", function () {
+				const canvas = document.getElementById("signature-pad");
+				const signaturePad = new SignaturePad(canvas);
+
+				window.clearSignature = function () {
+					signaturePad.clear();
+				};
+
+				window.saveSignature = function () {
+					if (signaturePad.isEmpty()) {
+						alert("Por favor, firma antes de guardar.");
+						return;
+					}
+
+					const dataURL = signaturePad.toDataURL();
+					document.getElementById("firma-imagen").src = dataURL;
+					document.getElementById("firma-guardada").style.display = "block";
+				};
+			});
 		</script>
 	</body>
 </html>
