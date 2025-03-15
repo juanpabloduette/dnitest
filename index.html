@@ -78,6 +78,10 @@
 				background-color: #be00ff;
 				color: white;
 			}
+			#btnEscanear,
+			#btnLinterna {
+				margin: 5px;
+			}
 			#btnLinterna {
 				padding: 10px 10px;
 				font-family: Arial, Helvetica, sans-serif;
@@ -94,16 +98,15 @@
 	</head>
 	<body>
 		<h2>Entregar certificado de subasta</h2>
-		<div class="buttons">
-			<button id="btnEscanear">Escanear DNI</button>
-			<button id="btnLinterna" style="display: none">🔦</button>
-		</div>
 
 		<div id="video-container">
 			<video id="video" style="display: none" autoplay></video>
 			<div id="recuadro"></div>
 		</div>
-
+		<div class="buttons">
+			<button id="btnEscanear">Escanear DNI</button>
+			<button id="btnLinterna" style="display: none">🔦</button>
+		</div>
 		<div class="campos">
 			<!-- <p><strong>Resultado:</strong> <span id="resultado"></span></p> -->
 			<p><strong>Apellido:</strong> <span id="apellido"></span></p>
