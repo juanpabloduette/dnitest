@@ -271,6 +271,7 @@
 									console.log("Código detectado:", datos);
 									detenerEscaneo();
 									codeReader.reset();
+									document.getElementById("signature-container").style.display = "block";
 								}
 							}
 						);
@@ -331,11 +332,6 @@
 					backgroundColor: "white",
 				});
 			};
-
-			// Simula la detección de un escaneo y muestra el cuadro de firma
-			function detectarEscaneo() {
-				document.getElementById("signature-container").style.display = "block";
-			}
 
 			// Borrar firma
 			function clearSignature() {
