@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
 		<title>Entregar Certificado - Narvaezbid</title>
 		<style>
 			body {
@@ -75,7 +76,8 @@
 				font-size: 35px;
 			}
 
-			#btnEscanear:hover {
+			#btnEscanear:hover,
+			#btnInstructivo:hover {
 				background-color: #be00ff;
 				color: white;
 			}
@@ -149,6 +151,25 @@
 				width: 100%;
 				border-radius: 10px;
 			}
+
+			/* Firma */
+			#signature-container {
+				display: none;
+				border: 2px solid #000;
+				width: 300px;
+				padding: 10px;
+				text-align: center;
+				background: white;
+			}
+			#signature-pad {
+				border: 2px solid black;
+				width: 100%;
+				height: 300px;
+			}
+			#firma-guardada {
+				margin-top: 20px;
+				display: none;
+			}
 		</style>
 	</head>
 	<body>
@@ -172,6 +193,21 @@
 		<div class="buttons">
 			<button id="btnEscanear">Escanear DNI</button>
 			<button id="btnLinterna" style="display: none">🔦</button>
+		</div>
+		<!-- Contenedor de firma -->
+		<div id="signature-container">
+			<h3>Firma Digital</h3>
+			<canvas id="signature-pad"></canvas>
+			<div class="buttons">
+				<button onclick="clearSignature()">Borrar</button>
+				<button onclick="saveSignature()">Aceptar</button>
+			</div>
+		</div>
+
+		<!-- Imagen de la firma guardada -->
+		<div id="firma-guardada">
+			<h4>Firma Guardada:</h4>
+			<img id="firma-imagen" src="" alt="Firma guardada" />
 		</div>
 		<div id="modal" class="modal">
 			<div class="modal-content">
@@ -284,6 +320,39 @@
 					document.getElementById("modal").style.display = "none";
 				}
 			});
+
+			// Firma
+			let signaturePad;
+			let firmaBase64 = "";
+
+			window.onload = function () {
+				let canvas = document.getElementById("signature-pad");
+				signaturePad = new SignaturePad(canvas, {
+					backgroundColor: "white",
+				});
+			};
+
+			// Simula la detección de un escaneo y muestra el cuadro de firma
+			function detectarEscaneo() {
+				document.getElementById("signature-container").style.display = "block";
+			}
+
+			// Borrar firma
+			function clearSignature() {
+				signaturePad.clear();
+			}
+
+			// Guardar firma
+			function saveSignature() {
+				if (!signaturePad.isEmpty()) {
+					firmaBase64 = signaturePad.toDataURL();
+					document.getElementById("firma-imagen").src = firmaBase64;
+					document.getElementById("firma-guardada").style.display = "block";
+					document.getElementById("signature-container").style.display = "none"; // Oculta el cuadro de firma
+				} else {
+					alert("Debes firmar antes de aceptar.");
+				}
+			}
 		</script>
 	</body>
 </html>
