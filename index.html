@@ -339,9 +339,10 @@
 			let firmaBase64 = "";
 
 			window.onload = function () {
-				let canvas = document.getElementById("signature-pad");
+				const canvas = document.getElementById("signature-pad");
 				signaturePad = new SignaturePad(canvas, {
 					backgroundColor: "transparent",
+					penColor: "#dfdfdf", // Cambio de color del trazo
 				});
 			};
 
