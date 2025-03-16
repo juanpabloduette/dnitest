@@ -271,14 +271,11 @@
 							(result, err) => {
 								if (result) {
 									const datos = result.text;
-									// resultadoElement.textContent = datos;
-
 									const partes = datos.split("@");
 									if (partes.length >= 9) {
 										apellidoElement.textContent = partes[1];
 										nombreElement.textContent = partes[2];
 										dniElement.textContent = partes[4];
-										// fechaEmisionElement.textContent = partes[7];
 									}
 
 									console.log("Código detectado:", datos);
@@ -317,7 +314,6 @@
 				linternaEncendida = false;
 				recuadro.style.display = "none";
 				console.log("Cámara apagada y escaneo detenido.");
-				// alert("Escaneo completado, cámara apagada.");
 			}
 
 			document
@@ -342,60 +338,56 @@
 
 			window.onload = function () {
 				const canvas = document.getElementById("signature-pad");
-				signaturePad = new SignaturePad(canvas, {
-					backgroundColor: "transparent",
-					penColor: "#dfdfdf", // Cambio de color del trazo
-				});
+				if (canvas) {
+					signaturePad = new SignaturePad(canvas, {
+						backgroundColor: "transparent",
+						penColor: "#dfdfdf",
+					});
+
+					// Vincular botones después de inicializar signaturePad
+					document
+						.getElementById("btnBorrarFirma")
+						.addEventListener("click", clearSignature);
+					document
+						.getElementById("btnAceptarFirma")
+						.addEventListener("click", saveSignature);
+				}
 			};
 
-			// function resizeCanvas() {
-			// 	const ratio = Math.max(window.devicePixelRatio || 1, 1);
-			// 	canvas.width = canvas.offsetWidth * ratio;
-			// 	canvas.height = canvas.offsetHeight * ratio;
-			// 	canvas.getContext("2d").scale(ratio, ratio);
-			// 	signaturePad.clear();
-			// }
+			// Ajustar el tamaño del canvas según la pantalla
+			function resizeCanvas() {
+				const canvas = document.getElementById("signature-pad");
+				if (canvas) {
+					const ratio = Math.max(window.devicePixelRatio || 1, 1);
+					canvas.width = canvas.offsetWidth * ratio;
+					canvas.height = canvas.offsetHeight * ratio;
+					canvas.getContext("2d").scale(ratio, ratio);
+					signaturePad.clear();
+				}
+			}
 
 			window.addEventListener("resize", resizeCanvas);
 			resizeCanvas();
 
 			// Borrar firma
 			function clearSignature() {
-				signaturePad.clear();
+				if (signaturePad) {
+					signaturePad.clear();
+				}
 			}
 
 			// Guardar firma
 			function saveSignature() {
-				if (!signaturePad.isEmpty()) {
-					firmaBase64 = signaturePad.toDataURL();
-					document.getElementById("firma-imagen").src = firmaBase64;
-					document.getElementById("firma-guardada").style.display = "block";
-					document.getElementById("signature-container").style.display = "none";
-				} else {
+				if (!signaturePad || signaturePad.isEmpty()) {
 					alert("Debes firmar antes de aceptar.");
+					return;
 				}
+
+				firmaBase64 = signaturePad.toDataURL();
+				document.getElementById("firma-imagen").src = firmaBase64;
+				document.getElementById("firma-guardada").style.display = "block";
+				document.getElementById("signature-container").style.display = "none";
 			}
-
-			// document.addEventListener("DOMContentLoaded", function () {
-			// 	const canvas = document.getElementById("signature-pad");
-			// 	const signaturePad = new SignaturePad(canvas);
-
-			// 	window.clearSignature = function () {
-			// 		signaturePad.clear();
-			// 	};
-
-			// 	window.saveSignature = function () {
-			// 		if (signaturePad.isEmpty()) {
-			// 			alert("Por favor, firma antes de guardar.");
-			// 			return;
-			// 		}
-
-			// 		const dataURL = signaturePad.toDataURL();
-			// 		document.getElementById("firma-imagen").src = dataURL;
-			// 		document.getElementById("firma-guardada").style.display = "block";
-			// 		document.getElementById("firma-container").style.display = "none";
-			// 	};
-			// });
 		</script>
 	</body>
 </html>
