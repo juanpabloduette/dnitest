@@ -351,8 +351,7 @@
 					firmaBase64 = signaturePad.toDataURL();
 					document.getElementById("firma-imagen").src = firmaBase64;
 					document.getElementById("firma-guardada").style.display = "block";
-					// document.getElementById("signature-container").style.display = "none";
-					// document.getElementById("firma-container").style.display = "none";
+					document.getElementById("signature-container").style.display = "none";
 				} else {
 					alert("Debes firmar antes de aceptar.");
 				}
