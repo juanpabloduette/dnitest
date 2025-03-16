@@ -78,7 +78,8 @@
 			#btnEscanear:hover,
 			#btnInstructivo:hover,
 			#btnAceptar:hover,
-			#btnBorrar:hover {
+			#btnBorrar:hover,
+			#btnCancelar:hover {
 				background-color: #be00ff;
 				color: white;
 			}
@@ -104,7 +105,8 @@
 			}
 			#btnInstructivo,
 			#btnAceptar,
-			#btnBorrar {
+			#btnBorrar,
+			#btnCancelar {
 				padding: 10px 10px;
 				font-family: Arial, Helvetica, sans-serif;
 				background-color: transparent;
@@ -215,8 +217,8 @@
 			<canvas id="signature-pad"></canvas>
 			<div class="buttons">
 				<button onclick="saveSignature()" id="btnAceptar">Aceptar</button>
-				<button onclick="clearSignature()">Borrar</button>
-				<button onclick="quitSignature()">Cancelar</button>
+				<button onclick="clearSignature()" id="btnBorrar">Borrar</button>
+				<button onclick="quitSignature()" id="btnCancelar">Cancelar</button>
 			</div>
 		</div>
 
@@ -374,26 +376,26 @@
 				}
 			}
 
-			document.addEventListener("DOMContentLoaded", function () {
-				const canvas = document.getElementById("signature-pad");
-				const signaturePad = new SignaturePad(canvas);
+			// document.addEventListener("DOMContentLoaded", function () {
+			// 	const canvas = document.getElementById("signature-pad");
+			// 	const signaturePad = new SignaturePad(canvas);
 
-				window.clearSignature = function () {
-					signaturePad.clear();
-				};
+			// 	window.clearSignature = function () {
+			// 		signaturePad.clear();
+			// 	};
 
-				window.saveSignature = function () {
-					if (signaturePad.isEmpty()) {
-						alert("Por favor, firma antes de guardar.");
-						return;
-					}
+			// 	window.saveSignature = function () {
+			// 		if (signaturePad.isEmpty()) {
+			// 			alert("Por favor, firma antes de guardar.");
+			// 			return;
+			// 		}
 
-					const dataURL = signaturePad.toDataURL();
-					document.getElementById("firma-imagen").src = dataURL;
-					document.getElementById("firma-guardada").style.display = "block";
-					document.getElementById("firma-container").style.display = "none";
-				};
-			});
+			// 		const dataURL = signaturePad.toDataURL();
+			// 		document.getElementById("firma-imagen").src = dataURL;
+			// 		document.getElementById("firma-guardada").style.display = "block";
+			// 		document.getElementById("firma-container").style.display = "none";
+			// 	};
+			// });
 		</script>
 	</body>
 </html>
