@@ -158,10 +158,10 @@
 			/* Firma */
 			#signature-container {
 				display: none;
-				border: 2px solid #000;
+				/* border: 2px solid #000; */
 				width: 100%;
-				max-width: 350px;
-				padding: 10px;
+				/* max-width: 350px; */
+				padding: 5px;
 				text-align: center;
 				background-color: #2c2c5c;
 				justify-content: center;
@@ -208,8 +208,9 @@
 			<h3>Firma Digital</h3>
 			<canvas id="signature-pad"></canvas>
 			<div class="buttons">
-				<button onclick="clearSignature()" id="btnBorrar">Borrar</button>
 				<button onclick="saveSignature()" id="btnAceptar">Aceptar</button>
+				<button onclick="clearSignature()" id="btnBorrar">Borrar</button>
+				<button onclick="quitSignature()" id="btnBorrar">Cancelar</button>
 			</div>
 		</div>
 
