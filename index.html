@@ -386,20 +386,6 @@
 				});
 			};
 
-			function resizeCanvas() {
-            const canvas = document.getElementById("signature-pad");
-            const ctx = canvas.getContext("2d");
-
-          
-
-            // Restaurar la firma
-            signaturePad.clear();
-            signaturePad.fromData(data);
-        }
-
-			// window.addEventListener("resize", resizeCanvas);
-			resizeCanvas();
-
 			// Borrar firma
 			function clearSignature() {
 				signaturePad.clear();
