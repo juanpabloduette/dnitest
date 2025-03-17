@@ -354,20 +354,27 @@
 
 			function resizeCanvas() {
     const canvas = document.getElementById("signature-pad");
+    const ctx = canvas.getContext("2d");
+
+    // Obtener el tamaño del contenedor
+    const width = canvas.offsetWidth;
+    const height = canvas.offsetHeight;
+
+    // Obtener la densidad de píxeles del dispositivo
     const ratio = window.devicePixelRatio || 1;
 
-    // Guarda la firma antes de redimensionar
-    const data = signaturePad.toData();
+    // Ajustar el tamaño real del canvas al tamaño visible * DPI
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
 
-    // Ajusta el tamaño del canvas sin distorsionar la firma
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
+    // Escalar el contexto para evitar desplazamiento
+    ctx.scale(ratio, ratio);
 
-    // Restaura la firma después del redimensionamiento
+    // Limpiar y reinicializar SignaturePad
     signaturePad.clear();
-    signaturePad.fromData(data);
+    signaturePad.on();
 }
+
 
 			window.addEventListener("resize", resizeCanvas);
 			resizeCanvas();
@@ -393,26 +400,6 @@
                 document.getElementById("signature-container").style.display = "none";
             }
 
-			// document.addEventListener("DOMContentLoaded", function () {
-			// 	const canvas = document.getElementById("signature-pad");
-			// 	const signaturePad = new SignaturePad(canvas);
-
-			// 	window.clearSignature = function () {
-			// 		signaturePad.clear();
-			// 	};
-
-			// 	window.saveSignature = function () {
-			// 		if (signaturePad.isEmpty()) {
-			// 			alert("Por favor, firma antes de guardar.");
-			// 			return;
-			// 		}
-
-			// 		const dataURL = signaturePad.toDataURL();
-			// 		document.getElementById("firma-imagen").src = dataURL;
-			// 		document.getElementById("firma-guardada").style.display = "block";
-			// 		document.getElementById("firma-container").style.display = "none";
-			// 	};
-			// });
 		</script>
 	</body>
 </html>
