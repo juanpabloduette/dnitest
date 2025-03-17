@@ -399,7 +399,7 @@
     // Guardar la firma actual antes de redimensionar
     const data = signaturePad.toData();
 
-    // Ajustar el tamaño real del canvas
+    // Ajustar el tamaño real del canvas con el ratio
     canvas.width = width * ratio;
     canvas.height = height * ratio;
 
@@ -414,6 +414,7 @@
     signaturePad.clear();
     signaturePad.fromData(data);
 }
+
 
 
 			window.addEventListener("resize", resizeCanvas);
