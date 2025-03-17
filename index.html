@@ -389,17 +389,16 @@
     const canvas = document.getElementById("signature-pad");
     const ctx = canvas.getContext("2d");
 
-    // Obtener tamaño visible del canvas
+    // Obtener el ancho del canvas visible (en función del tamaño de la pantalla)
     const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
+
+    // Establecer un tamaño fijo para el alto (220px)
+    const height = 220;
 
     // Obtener la densidad de píxeles del dispositivo
     const ratio = window.devicePixelRatio || 1;
 
-    // Guardar la firma actual antes de redimensionar
-    const data = signaturePad.toData();
-
-    // Ajustar el tamaño real del canvas con el ratio
+    // Ajustar el tamaño real del canvas
     canvas.width = width * ratio;
     canvas.height = height * ratio;
 
@@ -412,13 +411,13 @@
 
     // Restaurar la firma
     signaturePad.clear();
-    signaturePad.fromData(data);
+    signaturePad.fromData(signaturePad.toData());
 }
 
+// Asegúrate de llamar a resizeCanvas cuando se carga la página o cuando se redimensiona la ventana
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 
-
-			window.addEventListener("resize", resizeCanvas);
-			resizeCanvas();
 
 			// Borrar firma
 			function clearSignature() {
