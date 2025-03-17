@@ -396,21 +396,19 @@
     // Obtener la densidad de píxeles del dispositivo
     const ratio = window.devicePixelRatio || 1;
 
-    // Guardar la firma actual antes de redimensionar
-    const data = signaturePad.toData();
-
-    // Ajustar el tamaño real del canvas
+    // Ajustar el tamaño real del canvas según la densidad de píxeles
     canvas.width = width * ratio;
     canvas.height = height * ratio;
 
-    // Ajustar el tamaño visible del canvas
+    // Ajustar el tamaño visible del canvas sin cambiar su resolución
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-    // Corregir el escalado del contexto
+    // Corregir el escalado del contexto para que los trazos se dibujen correctamente
     ctx.scale(ratio, ratio);
 
-    // Restaurar la firma
+    // Restaurar la firma si ya se había dibujado algo
+    const data = signaturePad.toData();
     signaturePad.clear();
     signaturePad.fromData(data);
 }
