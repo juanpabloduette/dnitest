@@ -407,11 +407,12 @@
     // Corregir el escalado del contexto para que los trazos se dibujen correctamente
     ctx.scale(ratio, ratio);
 
-    // Restaurar la firma si ya se había dibujado algo
+    // Si ya había una firma guardada, restaurarla después del redimensionado
     const data = signaturePad.toData();
     signaturePad.clear();
     signaturePad.fromData(data);
 }
+
 
 
 			window.addEventListener("resize", resizeCanvas);
