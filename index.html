@@ -176,8 +176,8 @@
 			#signature-pad {
 				border: 1px solid #be00ff;
 				width: 100%;
-                max-width: 370px;
 				height: 220px;
+                box-sizing: border-box; /* Esto asegura que el padding no afecte el tamaño real del canvas */
 			}
 			#firma-guardada {
 				margin-top: 0px;
@@ -380,6 +380,10 @@
 
 			window.onload = function () {
 				const canvas = document.getElementById("signature-pad");
+    
+                // Asegúrate de que el canvas tenga el tamaño adecuado
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
 				signaturePad = new SignaturePad(canvas, {
 					backgroundColor: "transparent",
 					penColor: "#dfdfdf", // Cambio de color del trazo
