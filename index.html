@@ -354,17 +354,19 @@
 
 			function resizeCanvas() {
     const canvas = document.getElementById("signature-pad");
-    const ratio = Math.max(window.devicePixelRatio || 1, 1);
-    
-    // Ajustamos el tamaño físico del canvas
+    const ratio = window.devicePixelRatio || 1;
+
+    // Guarda la firma antes de redimensionar
+    const data = signaturePad.toData();
+
+    // Ajusta el tamaño del canvas sin distorsionar la firma
     canvas.width = canvas.offsetWidth * ratio;
     canvas.height = canvas.offsetHeight * ratio;
-    
-    // Escalamos el contexto para corregir el offset del trazo
-    const ctx = canvas.getContext("2d");
-    ctx.scale(ratio, ratio);
-    
-    signaturePad.clear(); // Limpia la firma para evitar distorsión
+    canvas.getContext("2d").scale(ratio, ratio);
+
+    // Restaura la firma después del redimensionamiento
+    signaturePad.clear();
+    signaturePad.fromData(data);
 }
 
 			window.addEventListener("resize", resizeCanvas);
