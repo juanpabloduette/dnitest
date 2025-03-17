@@ -270,16 +270,49 @@
 							videoElement,
 							(result, err) => {
 								if (result) {
-									const datos = result.text;
-									// resultadoElement.textContent = datos;
+									const datos = result.text;  // El texto del QR
+                                    const partes = datos.split("@");
 
-									const partes = datos.split("@");
-									if (partes.length >= 9) {
-										apellidoElement.textContent = partes[1];
-										nombreElement.textContent = partes[2];
-										dniElement.textContent = partes[4];
-										// fechaEmisionElement.textContent = partes[7];
-									}
+                                    // Creamos un objeto para almacenar los valores detectados
+                                    let apellido = '';
+                                    let nombre = '';
+                                    let dni = '';
+                                    let fechaNacimiento = '';
+                                    let fechaEmision = '';
+                                    let codigoExtra = '';  // El campo adicional en el segundo formato
+
+                                    // Verificamos cuántas partes tiene el array
+                                    if (partes.length === 8) {
+                                    // Caso 1: Formato con 8 partes
+                                    apellido = partes[1] || "Apellido no detectado";
+                                    nombre = partes[2] || "Nombre no detectado";
+                                    dni = partes[4] || "DNI no detectado";
+                                    fechaNacimiento = partes[6] || "Fecha de nacimiento no disponible";
+                                    fechaEmision = partes[7] || "Fecha de emisión no disponible";
+                                    } else if (partes.length === 9) {
+                                    // Caso 2: Formato con 9 partes
+                                    apellido = partes[1] || "Apellido no detectado";
+                                    nombre = partes[2] || "Nombre no detectado";
+                                    dni = partes[4] || "DNI no detectado";
+                                    fechaNacimiento = partes[6] || "Fecha de nacimiento no disponible";
+                                    fechaEmision = partes[7] || "Fecha de emisión no disponible";
+                                    codigoExtra = partes[8] || "Código adicional no disponible";
+                                    } else {
+                                    console.error("Formato del código QR inesperado");
+                                    }
+
+                                    // Mostrar los resultados
+                                    apellidoElement.textContent = apellido;
+                                    nombreElement.textContent = nombre;
+                                    dniElement.textContent = dni;
+                                    fechaEmisionElement.textContent = fechaEmision;
+                                    document.getElementById("fechaNacimiento").textContent = fechaNacimiento;
+
+                                    // Si hay un código extra en el segundo formato, lo mostramos
+                                    if (codigoExtra) {
+                                    console.log("Código adicional:", codigoExtra);
+                                    }
+
 
 									console.log("Código detectado:", datos);
 									detenerEscaneo();
