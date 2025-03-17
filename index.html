@@ -216,9 +216,9 @@
 			<h3>Firma Digital</h3>
 			<canvas id="signature-pad"></canvas>
 			<div class="buttons">
-				<button onclick="saveSignature()" id="btnAceptar">Aceptar</button>
-				<button onclick="clearSignature()" id="btnBorrar">Borrar</button>
-				<button onclick="quitSignature()" id="btnCancelar">Cancelar</button>
+				<button id="btnAceptar">Aceptar</button>
+				<button id="btnBorrar">Borrar</button>
+				<button id="btnCancelar">Cancelar</button>
 			</div>
 		</div>
 
@@ -337,6 +337,10 @@
 			});
 
 			// Firma
+
+            document.getElementById("btnAceptar").addEventListener("click", saveSignature);
+            document.getElementById("btnBorrar").addEventListener("click", clearSignature);
+            document.getElementById("btnCancelar").addEventListener("click", quitSignature);
 			let signaturePad;
 			let firmaBase64 = "";
 
@@ -375,6 +379,10 @@
 					alert("Debes firmar antes de aceptar.");
 				}
 			}
+
+            function quitSignature() {
+                document.getElementById("signature-container").style.display = "none";
+            }
 
 			// document.addEventListener("DOMContentLoaded", function () {
 			// 	const canvas = document.getElementById("signature-pad");
