@@ -386,38 +386,36 @@
 			};
 
 			function resizeCanvas() {
-    const canvas = document.getElementById("signature-pad");
-    const ctx = canvas.getContext("2d");
+            const canvas = document.getElementById("signature-pad");
+            const ctx = canvas.getContext("2d");
 
-    // Obtener tamaño visible del canvas
-    const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
+            // Obtener tamaño visible del canvas
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
 
-    // Obtener la densidad de píxeles del dispositivo
-    const ratio = window.devicePixelRatio || 1;
+            // Obtener la densidad de píxeles del dispositivo
+            const ratio = window.devicePixelRatio || 1;
 
-    // Guardar la firma actual antes de redimensionar
-    const data = signaturePad.toData();
+            // Guardar la firma actual antes de redimensionar
+            const data = signaturePad.toData();
 
-    // Ajustar el tamaño real del canvas con el ratio
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
+            // Ajustar el tamaño real del canvas con el ratio
+            canvas.width = width * ratio;
+            canvas.height = height * ratio;
 
-    // Ajustar el tamaño visible del canvas
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+            // Ajustar el tamaño visible del canvas
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
 
-    // Corregir el escalado del contexto
-    ctx.scale(ratio, ratio);
+            // Corregir el escalado del contexto
+            ctx.scale(ratio, ratio);
 
-    // Restaurar la firma
-    signaturePad.clear();
-    signaturePad.fromData(data);
-}
+            // Restaurar la firma
+            signaturePad.clear();
+            signaturePad.fromData(data);
+        }
 
-
-
-			window.addEventListener("resize", resizeCanvas);
+			// window.addEventListener("resize", resizeCanvas);
 			resizeCanvas();
 
 			// Borrar firma
