@@ -389,21 +389,21 @@
     const canvas = document.getElementById("signature-pad");
     const ctx = canvas.getContext("2d");
 
-    // Obtener el ancho del canvas visible
+    // Obtener el ancho visible del canvas (del contenedor del canvas)
     const width = canvas.offsetWidth;
-    const height = 220;  // Fijo en 220px
+    const height = 220;  // Fijo en 220px para el alto
 
-    // Ajustar el tamaño real del canvas según el ancho visible
+    // Ajustar el tamaño real del canvas
     canvas.width = width;  // Usamos el ancho visible del contenedor
     canvas.height = height;  // El alto sigue siendo fijo
 
-    // No escalamos el contexto (eliminamos ctx.scale)
+    // Corregir la escala del contexto sin usar scale() para evitar el desajuste
+    // (esto hace que los trazos se dibujen correctamente)
 
-    // Si ya hay firma, la restauramos
+    // Restauramos la firma si ya había alguna
     signaturePad.clear();
     signaturePad.fromData(signaturePad.toData());
 }
-
 // Llamamos a la función cuando se carga la página o cuando se redimensiona la ventana
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
