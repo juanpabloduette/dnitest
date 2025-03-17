@@ -60,17 +60,18 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-                margin: 5px;
+				margin: 5px;
 			}
 			#btnEscanear {
-				padding: 10px 10px;
 				font-family: Arial, Helvetica, sans-serif;
 				background-color: transparent;
 				border-radius: 50px;
+				padding: 10px 10px;
 				border: 1px solid #be00ff;
-				transition: all 0.2s ease;
-				margin: 5px;
 				min-width: 270px;
+				margin: 5px;
+				transition: all 0.2s ease;
+
 				cursor: pointer;
 				color: white;
 				font-size: 35px;
@@ -131,6 +132,13 @@
 				overflow: auto;
 				background-color: rgba(0, 0, 0, 0.7);
 			}
+
+			.modal-header {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-bottom: 15px;
+			}
 			.modal-content {
 				background-color: #2c2c5c;
 				margin: 15% auto;
@@ -147,7 +155,9 @@
 				font-size: 28px;
 				font-weight: bold;
 				cursor: pointer;
+				margin-top: -10px;
 			}
+
 			.close:hover,
 			.close:focus {
 				color: white;
@@ -170,7 +180,7 @@
 				align-items: center;
 				flex-direction: column;
 				border-radius: 10px;
-                margin: 0 auto;
+				margin: 0 auto;
 			}
 			#signature-pad {
 				border: 1px solid #be00ff;
@@ -181,9 +191,9 @@
 				margin-top: 0px;
 				display: none;
 			}
-            #firma-imagen{
-                max-width: 370px;
-            }
+			#firma-imagen {
+				max-width: 370px;
+			}
 		</style>
 	</head>
 	<body>
@@ -227,6 +237,64 @@
 		<div id="modal" class="modal">
 			<div class="modal-content">
 				<span class="close">&times;</span>
+				<div class="modal-header">
+					<!-- <svg
+						width="46px"
+						height="46px"
+						viewBox="0 0 48 48"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="#ffffff"
+					>
+						<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+						<g
+							id="SVGRepo_tracerCarrier"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						></g>
+						<g id="SVGRepo_iconCarrier">
+							<defs>
+								<style>
+									.a {
+										fill: none;
+										stroke: #ffffff;
+										stroke-linecap: round;
+										stroke-linejoin: round;
+									}
+								</style>
+							</defs>
+							<rect
+								class="a"
+								x="5.6751"
+								y="10.9786"
+								width="36.6498"
+								height="26.0429"
+								rx="3"
+							></rect>
+							<circle class="a" cx="14.8376" cy="21.4867" r="3.5632"></circle>
+							<path
+								class="a"
+								d="M10.3276,31.0945h9.7835a.92.92,0,0,0,.6994-1.5192,7.1719,7.1719,0,0,0-11.1823,0,.92.92,0,0,0,.6994,1.5192Z"
+							></path>
+							<line
+								class="a"
+								x1="28.7085"
+								y1="20.8504"
+								x2="35.7076"
+								y2="20.8504"
+							></line>
+							<line
+								class="a"
+								x1="28.7085"
+								y1="27.7222"
+								x2="35.7076"
+								y2="27.7222"
+							></line>
+							<line class="a" x1="28.7085" y1="24.2863" x2="38.38" y2="24.2863"></line>
+						</g>
+					</svg> -->
+					<h2>Escanear DNI</h2>
+				</div>
+
 				<img src="dniformat.png" alt="Instructivo" />
 			</div>
 		</div>
@@ -272,49 +340,48 @@
 							videoElement,
 							(result, err) => {
 								if (result) {
-									const datos = result.text;  // El texto del QR
-                                    const partes = datos.split("@");
+									const datos = result.text; // El texto del QR
+									const partes = datos.split("@");
 
-                                    // Creamos un objeto para almacenar los valores detectados
-                                    let apellido = '';
-                                    let nombre = '';
-                                    let dni = '';
-                                    let fechaNacimiento = '';
-                                    let fechaEmision = '';
-                                    let codigoExtra = '';  // El campo adicional en el segundo formato
+									// Creamos un objeto para almacenar los valores detectados
+									let apellido = "";
+									let nombre = "";
+									let dni = "";
+									let fechaNacimiento = "";
+									let fechaEmision = "";
+									let codigoExtra = ""; // El campo adicional en el segundo formato
 
-                                    // Verificamos cuántas partes tiene el array
-                                    if (partes.length === 8) {
-                                    // Caso 1: Formato con 8 partes
-                                    apellido = partes[1] || "Apellido no detectado";
-                                    nombre = partes[2] || "Nombre no detectado";
-                                    dni = partes[4] || "DNI no detectado";
-                                    fechaNacimiento = partes[6] || "Fecha de nacimiento no disponible";
-                                    fechaEmision = partes[7] || "Fecha de emisión no disponible";
-                                    } else if (partes.length === 9) {
-                                    // Caso 2: Formato con 9 partes
-                                    apellido = partes[1] || "Apellido no detectado";
-                                    nombre = partes[2] || "Nombre no detectado";
-                                    dni = partes[4] || "DNI no detectado";
-                                    fechaNacimiento = partes[6] || "Fecha de nacimiento no disponible";
-                                    fechaEmision = partes[7] || "Fecha de emisión no disponible";
-                                    codigoExtra = partes[8] || "Código adicional no disponible";
-                                    } else {
-                                    console.error("Formato del código QR inesperado");
-                                    }
+									// Verificamos cuántas partes tiene el array
+									if (partes.length === 8) {
+										// Caso 1: Formato con 8 partes
+										apellido = partes[1] || "Apellido no detectado";
+										nombre = partes[2] || "Nombre no detectado";
+										dni = partes[4] || "DNI no detectado";
+										fechaNacimiento = partes[6] || "Fecha de nacimiento no disponible";
+										fechaEmision = partes[7] || "Fecha de emisión no disponible";
+									} else if (partes.length === 9) {
+										// Caso 2: Formato con 9 partes
+										apellido = partes[1] || "Apellido no detectado";
+										nombre = partes[2] || "Nombre no detectado";
+										dni = partes[4] || "DNI no detectado";
+										fechaNacimiento = partes[6] || "Fecha de nacimiento no disponible";
+										fechaEmision = partes[7] || "Fecha de emisión no disponible";
+										codigoExtra = partes[8] || "Código adicional no disponible";
+									} else {
+										console.error("Formato del código QR inesperado");
+									}
 
-                                    // Mostrar los resultados
-                                    apellidoElement.textContent = apellido;
-                                    nombreElement.textContent = nombre;
-                                    dniElement.textContent = dni;
-                                    // fechaEmisionElement.textContent = fechaEmision;
-                                    // document.getElementById("fechaNacimiento").textContent = fechaNacimiento;
+									// Mostrar los resultados
+									apellidoElement.textContent = apellido;
+									nombreElement.textContent = nombre;
+									dniElement.textContent = dni;
+									// fechaEmisionElement.textContent = fechaEmision;
+									// document.getElementById("fechaNacimiento").textContent = fechaNacimiento;
 
-                                    // Si hay un código extra en el segundo formato, lo mostramos
-                                    if (codigoExtra) {
-                                    console.log("Código adicional:", codigoExtra);
-                                    }
-
+									// Si hay un código extra en el segundo formato, lo mostramos
+									if (codigoExtra) {
+										console.log("Código adicional:", codigoExtra);
+									}
 
 									console.log("Código detectado:", datos);
 									detenerEscaneo();
@@ -373,27 +440,31 @@
 
 			// Firma
 
-            document.getElementById("btnAceptar").addEventListener("click", saveSignature);
-            document.getElementById("btnBorrar").addEventListener("click", clearSignature);
-            // document.getElementById("btnCancelar").addEventListener("click", quitSignature);
+			document
+				.getElementById("btnAceptar")
+				.addEventListener("click", saveSignature);
+			document
+				.getElementById("btnBorrar")
+				.addEventListener("click", clearSignature);
+			// document.getElementById("btnCancelar").addEventListener("click", quitSignature);
 			let signaturePad;
 			let firmaBase64 = "";
 
 			window.onload = function () {
 				const canvas = document.getElementById("signature-pad");
-                ajustarTamanioCanvas(canvas); // Ajustamos el tamaño correctamente
-      			signaturePad = new SignaturePad(canvas, {
+				ajustarTamanioCanvas(canvas); // Ajustamos el tamaño correctamente
+				signaturePad = new SignaturePad(canvas, {
 					backgroundColor: "transparent",
 					penColor: "#dfdfdf", // Cambio de color del trazo
 				});
 			};
-            // Función para asegurar que el canvas tenga el tamaño correcto
-            function ajustarTamanioCanvas(canvas) {
-                const ratio = Math.max(window.devicePixelRatio || 1, 1);
-                canvas.width = 370 * ratio; // Multiplicamos por el ratio del dispositivo
-                canvas.height = 220 * ratio;
-                canvas.getContext("2d").scale(ratio, ratio); // Escalamos para evitar desfasajes
-            }
+			// Función para asegurar que el canvas tenga el tamaño correcto
+			function ajustarTamanioCanvas(canvas) {
+				const ratio = Math.max(window.devicePixelRatio || 1, 1);
+				canvas.width = 370 * ratio; // Multiplicamos por el ratio del dispositivo
+				canvas.height = 220 * ratio;
+				canvas.getContext("2d").scale(ratio, ratio); // Escalamos para evitar desfasajes
+			}
 
 			// Borrar firma
 			function clearSignature() {
@@ -412,10 +483,9 @@
 				}
 			}
 
-            function quitSignature() {
-                document.getElementById("signature-container").style.display = "none";
-            }
-
+			function quitSignature() {
+				document.getElementById("signature-container").style.display = "none";
+			}
 		</script>
 	</body>
 </html>
