@@ -673,8 +673,13 @@
 				let content = document.getElementById("accordion-content");
 				content.style.display =
 					content.style.display === "block" ? "none" : "block";
-				btnEscanear.style.display =
-					content.style.display === "block" ? "none" : "block";
+				// btnEscanear.style.display =
+				// 	content.style.display === "block" ? "none" : "block";
+				if (btnEscanear.style.display === "none") {
+					btnEscanear.style.display === "block";
+				} else {
+					btnEscanear.style.display === "none";
+				}
 				detenerEscaneo();
 			}
 
