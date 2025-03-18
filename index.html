@@ -82,12 +82,15 @@
 				color: white;
 				font-size: 35px;
 			}
-			#btnEscanear:focus,
-			#btnInstructivo:focus,
-			#btnAceptar:focus,
-			#btnBorrar:focus,
-			#btnCancelar:focus {
-				outline: none;
+
+			@media (hover: none) {
+				#btnEscanear:focus,
+				#btnInstructivo:focus,
+				#btnAceptar:focus,
+				#btnBorrar:focus,
+				#btnCancelar:focus {
+					outline: none;
+				}
 			}
 
 			#btnEscanear:hover,
