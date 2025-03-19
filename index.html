@@ -647,6 +647,12 @@
 			</div>
 		</div>
 		<script type="module">
+			if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log("La app está en modo standalone");
+} else {
+    console.log("La app está en el navegador");
+}
+
 			import { BrowserMultiFormatReader } from "https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm";
 
 			const codeReader = new BrowserMultiFormatReader();
