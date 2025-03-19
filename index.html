@@ -507,6 +507,7 @@
 					<!-- <button class="btn-cancel" onclick="toggleAccordion()">Cancelar</button> -->
 				</div>
 			</div>
+			<button id="btnEntregar" style="display: none;">ENTREGAR</button>
 		</div>
 		<div class="buttons">
 			<button id="btnEscanear">Escanear DNI</button>
@@ -833,8 +834,11 @@
 					document.getElementById("firma-imagen").src = firmaBase64;
 					document.getElementById("firma-guardada").style.display = "block";
 					document.getElementById("signature-container").style.display = "none";
-					document.querySelector(".accordion").style.display = "none";
+					
 					// SACAR BOTON MANUAL Y APARECE BOTON ENTREGAR
+					document.querySelector(".accordion").style.display = "none";
+					document.getElementById("btnEntregar").style.display = "block";
+
 				} else {
 					alert("Debes firmar antes de aceptar.");
 				}
