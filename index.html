@@ -833,6 +833,8 @@
 					document.getElementById("firma-imagen").src = firmaBase64;
 					document.getElementById("firma-guardada").style.display = "block";
 					document.getElementById("signature-container").style.display = "none";
+					document.querySelector(".accordion").style.display = "none";
+					// SACAR BOTON MANUAL Y APARECE BOTON ENTREGAR
 				} else {
 					alert("Debes firmar antes de aceptar.");
 				}
