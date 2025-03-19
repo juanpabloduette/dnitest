@@ -136,7 +136,19 @@
 				display: flex;
 				justify-content: center;
 			}
-			#btnInstructivo,
+
+			#btnInstructivo{
+				padding: 6px 10px;
+				font-family: Arial, Helvetica, sans-serif;
+				background-color: transparent;
+				border-radius: 15px;
+				border: 1px solid #be00ff;
+				transition: all 0.2s ease;
+				margin: 2px;
+				cursor: pointer;
+				color: white;
+				font-size: 20px;
+			}
 			#btnAceptar,
 			#btnBorrar,
 			#btnCancelar {
@@ -690,8 +702,6 @@
 			</div>
 		</div>
 		<script type="module">
-
-document.documentElement.requestFullscreen();
 
 			import { BrowserMultiFormatReader } from "https://cdn.jsdelivr.net/npm/@zxing/library@latest/+esm";
 
