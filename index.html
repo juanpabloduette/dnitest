@@ -870,7 +870,7 @@
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
-				alert(canvas.innerWidth)
+				alert(canvas.Width)
 				if (canvas.innerWidth > 370	) {
 					// window.innerWidth > window.innerHeight
 				// Modo horizontal: hacerlo más ancho
@@ -883,8 +883,8 @@
 					canvas.height = 220 * ratio;
 				}
 
-    canvas.getContext("2d").scale(ratio, ratio);
-			}
+    			canvas.getContext("2d").scale(ratio, ratio);
+				}
 
 			// Borrar firma
 			function clearSignature() {
