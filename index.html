@@ -858,6 +858,7 @@
 			window.onload = function () {
 				const canvas = document.getElementById("signature-pad");
 				ajustarTamanioCanvas(canvas); // Ajustamos el tamaño correctamente
+				
 				signaturePad = new SignaturePad(canvas, {
 					backgroundColor: "transparent",
 					penColor: "#dfdfdf", // Cambio de color del trazo
@@ -866,31 +867,18 @@
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
-				canvas.width = 370 * ratio; // Multiplicamos por el ratio del dispositivo
-				canvas.height = 220 * ratio;
-				canvas.getContext("2d").scale(ratio, ratio); // Escalamos para evitar desfasajes
-			}
-
-			const canvas = document.getElementById("signature-pad");
-const ctx = canvas.getContext("2d");
-
-function ajustarCanvas() {
-    if (window.innerWidth > window.innerHeight) {
-        // Modo horizontal
-        canvas.width = window.innerWidth * 0.9;
-        canvas.height = window.innerHeight * 0.9;
+				if (window.innerWidth > window.innerHeight) {
+        // Modo horizontal: hacerlo más ancho
+        canvas.width = 600 * ratio; 
+        canvas.height = 220 * ratio;
     } else {
-        // Modo vertical
-        canvas.width = window.innerWidth * 0.8;
-        canvas.height = window.innerHeight * 0.6;
+        // Modo vertical: tamaño normal
+        canvas.width = 370 * ratio;
+        canvas.height = 220 * ratio;
     }
-}
 
-// Ajustar al cargar y al girar el dispositivo
-window.addEventListener("resize", ajustarCanvas);
-window.addEventListener("orientationchange", ajustarCanvas);
-ajustarCanvas();
-
+    canvas.getContext("2d").scale(ratio, ratio);
+			}
 
 			// Borrar firma
 			function clearSignature() {
