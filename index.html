@@ -865,7 +865,7 @@
 				});
 
 				// Ajustar tamaño cuando se gira el celular
-				window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
+				window.addEventListener("orientationchange", () => ajustarTamanioCanvas(canvas));
 			};
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
