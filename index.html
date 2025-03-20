@@ -776,10 +776,15 @@
 										console.error("Formato del código QR inesperado");
 									}
 
+									function formatDNI(dni) {
+									    return dni.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+									}
+									let dniFormateado = formatDNI(dni);
+
 									// Mostrar los resultados
 									apellidoElement.textContent = apellido;
 									nombreElement.textContent = nombre;
-									dniElement.textContent = dni;
+									dniElement.textContent = dniFormateado;
 									// fechaEmisionElement.textContent = fechaEmision;
 									// document.getElementById("fechaNacimiento").textContent = fechaNacimiento;
 
@@ -864,6 +869,7 @@
 					penColor: "#dfdfdf", // Cambio de color del trazo
 				});
 			};
+
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -871,7 +877,7 @@
 				canvas.height = 220 * ratio;
 				canvas.getContext("2d").scale(ratio, ratio); // Escalamos para evitar desfasajes
 			}
-
+			
 			// Borrar firma
 			function clearSignature() {
 				signaturePad.clear();
