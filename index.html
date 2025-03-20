@@ -871,6 +871,27 @@
 				canvas.getContext("2d").scale(ratio, ratio); // Escalamos para evitar desfasajes
 			}
 
+			const canvas = document.getElementById("signature-pad");
+const ctx = canvas.getContext("2d");
+
+function ajustarCanvas() {
+    if (window.innerWidth > window.innerHeight) {
+        // Modo horizontal
+        canvas.width = window.innerWidth * 0.9;
+        canvas.height = window.innerHeight * 0.9;
+    } else {
+        // Modo vertical
+        canvas.width = window.innerWidth * 0.8;
+        canvas.height = window.innerHeight * 0.6;
+    }
+}
+
+// Ajustar al cargar y al girar el dispositivo
+window.addEventListener("resize", ajustarCanvas);
+window.addEventListener("orientationchange", ajustarCanvas);
+ajustarCanvas();
+
+
 			// Borrar firma
 			function clearSignature() {
 				signaturePad.clear();
