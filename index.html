@@ -863,6 +863,9 @@
 					backgroundColor: "transparent",
 					penColor: "#dfdfdf", // Cambio de color del trazo
 				});
+
+				// Ajustar tamaño cuando se gira el celular
+				window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
 			};
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
