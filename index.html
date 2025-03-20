@@ -863,27 +863,14 @@
 					backgroundColor: "transparent",
 					penColor: "#dfdfdf", // Cambio de color del trazo
 				});
-
-				// Ajustar tamaño cuando se gira el celular
-				window.addEventListener("orientationchange", () => ajustarTamanioCanvas(canvas));
 			};
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
-				alert(window.innerWidth > window.innerHeight);
-				if (window.innerWidth > window.innerHeight) {
-				// Modo horizontal: hacerlo más ancho
-				
-				canvas.width = 600 * ratio; 
+				canvas.width = 370 * ratio; // Multiplicamos por el ratio del dispositivo
 				canvas.height = 220 * ratio;
-				} else {
-					// Modo vertical: tamaño normal
-					canvas.width = 370 * ratio;
-					canvas.height = 220 * ratio;
-				}
-
-    			canvas.getContext("2d").scale(ratio, ratio);
-				}
+				canvas.getContext("2d").scale(ratio, ratio); // Escalamos para evitar desfasajes
+			}
 
 			// Borrar firma
 			function clearSignature() {
