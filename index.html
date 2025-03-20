@@ -870,10 +870,11 @@
 			// Función para asegurar que el canvas tenga el tamaño correcto
 			function ajustarTamanioCanvas(canvas) {
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
+				alert(canvas.innerWidth)
 				if (canvas.innerWidth > 370	) {
 					// window.innerWidth > window.innerHeight
 				// Modo horizontal: hacerlo más ancho
-				alert(canvas.innerWidth)
+				
 				canvas.width = 600 * ratio; 
 				canvas.height = 220 * ratio;
 				} else {
