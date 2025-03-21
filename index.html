@@ -621,7 +621,7 @@
 			<div class="accordion-content" id="accordion-content">
 				<input type="text" placeholder="Nombre" />
 				<input type="text" placeholder="Apellido" />
-				<input type="text" placeholder="DNI" />
+				<input type="number" placeholder="DNI" />
 				<div class="btn-container">
 					<button class="btn-confirm" id="btnConfirmar">Confirmar</button>
 					<!-- <button class="btn-cancel" onclick="toggleAccordion()">Cancelar</button> -->
@@ -798,9 +798,6 @@
 				nombreElement.textContent = nombre;
 				dniElement.textContent = dni;
 				
-				// console.log("Nombre:", nombre);
-				// console.log("Apellido:", apellido);
-				// console.log("DNI:", dni);
 
 				document.getElementById("signature-container").style.display = "flex";
 				nombre = "";
