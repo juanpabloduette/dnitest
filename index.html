@@ -27,6 +27,11 @@
 				justify-content: center;
 				align-items: center;
 			}
+			.campos-datos{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 			.campos p, .campos span {
 				margin: 2px;
 			}
@@ -458,17 +463,18 @@
 
 		<div class="campos">
 			<!-- <p><strong>Resultado:</strong> <span id="resultado"></span></p> -->
-			 <div class="campos-iz">
-				<p>Nombre: </p>
-				<p>Apellido: </p>
-				<p>DNI: </p>
-			 </div>
-			 <div class="campos-der">
-				<span id="nombre"></span>
-				<span id="apellido"></span>
-				<span id="dni"></span>
-			 </div>
-						
+			<div class="campos-datos">
+				<div class="campos-iz">
+					<p>Nombre: </p>
+					<p>Apellido: </p>
+					<p>DNI: </p>
+				 </div>
+				 <div class="campos-der">
+					<span id="nombre"></span>
+					<span id="apellido"></span>
+					<span id="dni"></span>
+				 </div>
+			</div> 
 			<!-- <p><strong>Fecha Emisión:</strong> <span id="fechaEmision"></span></p> -->
 			<!-- Imagen de la firma guardada -->
 			<div id="firma-guardada">
