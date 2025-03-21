@@ -794,9 +794,14 @@
 				const apellido = document.querySelector("#accordion-content input[placeholder='Apellido']").value;
 				const dni = document.querySelector("#accordion-content input[placeholder='DNI']").value;
 
+				// function formatDNI(dni) {
+				// 						return dni.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				// 					}
+									let dniFormateado = formatDNI(dni);
+
 				apellidoElement.textContent = apellido;
 				nombreElement.textContent = nombre;
-				dniElement.textContent = dni;
+				dniElement.textContent = dniFormateado;
 				
 
 				document.getElementById("signature-container").style.display = "flex";
