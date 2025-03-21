@@ -623,7 +623,7 @@
 				<input type="text" placeholder="Apellido" />
 				<input type="text" placeholder="DNI" />
 				<div class="btn-container">
-					<button class="btn-confirm">Confirmar</button>
+					<button class="btn-confirm" id="btnConfirmar">Confirmar</button>
 					<!-- <button class="btn-cancel" onclick="toggleAccordion()">Cancelar</button> -->
 				</div>
 			</div>
@@ -785,6 +785,23 @@
 			const nombreElement = document.getElementById("nombre");
 			const dniElement = document.getElementById("dni");
 			const fechaEmisionElement = document.getElementById("fechaEmision");
+			
+
+			//INGRESAR MANUAL
+			const btnConfirmar = document.getElementById("btnConfirmar");
+			btnConfirmar.addEventListener("click", ()=>{
+				const nombre = document.querySelector("#accordion-content input[placeholder='Nombre']").value;
+				const apellido = document.querySelector("#accordion-content input[placeholder='Apellido']").value;
+				const dni = document.querySelector("#accordion-content input[placeholder='DNI']").value;
+
+				apellidoElement.textContent = apellido;
+				nombreElement.textContent = nombre;
+				dniElement.textContent = dni;
+				
+				console.log("Nombre:", nombre);
+				console.log("Apellido:", apellido);
+				console.log("DNI:", dni);
+			})
 
 			let stream = null;
 			let track = null;
