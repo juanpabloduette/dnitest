@@ -806,9 +806,9 @@
 						}
 				let dniFormateado = formatDNI(dni);
 
-				apellidoElement.textContent = apellido;
-				nombreElement.textContent = nombre;
-				dniElement.textContent = dniFormateado;
+				apellidoElement.textContent.toLocaleUpperCase = apellido;
+				nombreElement.textContent.toLocaleUpperCase = nombre;
+				dniElement.textContent.toLocaleUpperCase = dniFormateado;
 				
 				toggleAccordion()
 				document.getElementById("signature-container").style.display = "flex";
