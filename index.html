@@ -812,9 +812,9 @@
 				
 				toggleAccordion()
 				document.getElementById("signature-container").style.display = "flex";
-				nombre.textContent = "";
-				apellido.textContent = "";
-				dni.textContent = "";
+				document.querySelector("#accordion-content input[placeholder='Nombre']").value = "";
+				document.querySelector("#accordion-content input[placeholder='Apellido']").value = "";
+				document.querySelector("#accordion-content input[placeholder='DNI']").value = "";
 				btnEscanear.style.display = "none";
 
 			})
