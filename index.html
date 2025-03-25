@@ -793,6 +793,10 @@
 				const apellido = document.querySelector("#accordion-content input[placeholder='Apellido']").value;
 				const dni = document.querySelector("#accordion-content input[placeholder='DNI']").value;
 
+				if(!nombre || !apellido || !dni){
+					alert("Completar campos");
+					return
+				}
 				function formatDNI(dni) {
 										return dni.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 						}
