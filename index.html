@@ -846,7 +846,8 @@
 							videoElement,
 							(result, err) => {
 								if (result) {
-									const datos = result.text; // El texto del QR
+									// const datos = result.text; 
+									const datos = decodeURIComponent(result.text);
 									const partes = datos.split("@");
 
 									// Creamos un objeto para almacenar los valores detectados
