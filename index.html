@@ -806,8 +806,8 @@
 						}
 				let dniFormateado = formatDNI(dni);
 
-				apellidoElement.textContent.toUpperCase() = apellido;
-				nombreElement.textContent.toUpperCase() = nombre;
+				apellidoElement.textContent = apellido.toUpperCase();
+				nombreElement.textContent = nombre.toUpperCase();
 				dniElement.textContent = dniFormateado;
 				
 				toggleAccordion()
