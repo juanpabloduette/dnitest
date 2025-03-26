@@ -985,34 +985,33 @@
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         
         // Guardar la firma actual antes de redimensionar
-        const data = signaturePad.isEmpty() ? null : signaturePad.toDataURL();
+        let data = signaturePad.toData();
 
         // Ajustar el tamaño según la orientación
         if (window.innerWidth > window.innerHeight) {
-            canvas.width = window.innerWidth * ratio;
-            canvas.height = window.innerHeight * ratio;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         } else {
-            canvas.width = 370 * ratio;
-            canvas.height = 220 * ratio;
+            canvas.width = 370;
+            canvas.height = 220;
         }
 
         canvas.getContext("2d").scale(ratio, ratio); // Mantener calidad
 
         // Restaurar la firma si existía
-        if (data) {
-            const img = new Image();
-            img.src = data;
-            img.onload = function () {
-                canvas.getContext("2d").drawImage(img, 0, 0, canvas.width / ratio, canvas.height / ratio);
-            };
-        }
-
-        signaturePad.clear(); // Limpiar y restaurar
+        signaturePad.clear(); // Limpiar antes de restaurar para evitar errores
+        signaturePad.fromData(data);
     }
 
     ajustarTamanioCanvas();
     window.addEventListener("resize", ajustarTamanioCanvas);
+
+    // Función para limpiar la firma correctamente
+    document.getElementById("btnBorrar").addEventListener("click", function () {
+        signaturePad.clear();
+    });
 };
+
 
 			// Borrar firma
 			function clearSignature() {
