@@ -993,11 +993,14 @@
 
 				if (window.innerWidth > window.innerHeight) {
 					// Modo horizontal: ocupar toda la pantalla
-					alert(window.innerWidth);
-					alert(window.innerHeight);
+					// alert(window.innerWidth);
+					// alert(window.innerHeight);
+
+					canvas.width = 800 * ratio;
+					canvas.height = 280 * ratio;
 					
-					canvas.width = window.innerWidth * ratio;
-					canvas.height = window.innerHeight * ratio;
+					// canvas.width = window.innerWidth * ratio;
+					// canvas.height = window.innerHeight * ratio;
 				} else {
 					// Modo vertical: tamaño normal
 					canvas.width = 370 * ratio;
