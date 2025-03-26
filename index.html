@@ -973,35 +973,39 @@
 			let firmaBase64 = "";
 
 			window.onload = function () {
-				const canvas = document.getElementById("signature-pad");
-				ajustarTamanioCanvas(canvas);
+    const canvas = document.getElementById("signature-pad");
+    ajustarTamanioCanvas(canvas);
 
-				signaturePad = new SignaturePad(canvas, {
-					backgroundColor: "transparent",
-					penColor: "#dfdfdf", // Cambio de color del trazo
-				});
+    signaturePad = new SignaturePad(canvas, {
+        backgroundColor: "transparent",
+        penColor: "#dfdfdf", // Color del trazo
+    });
 
-				// Ajustar tamaño del canvas cuando cambie la orientación
-				window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
-			};
+    // Ajustar tamaño del canvas cuando cambie la orientación
+    window.addEventListener("resize", () => {
+        ajustarTamanioCanvas(canvas);
+        signaturePad.clear(); // Limpiamos la firma para evitar desfasajes
+    });
+};
 
-			// Función para ajustar el tamaño del canvas según la orientación
-			function ajustarTamanioCanvas(canvas) {
-				const ratio = Math.max(window.devicePixelRatio || 1, 1);
+// Función para ajustar el tamaño del canvas correctamente
+function ajustarTamanioCanvas(canvas) {
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
-				if (window.innerWidth > window.innerHeight) {
-					// Modo horizontal: ocupar toda la pantalla
-					canvas.width = window.innerWidth * ratio;
-					canvas.height = window.innerHeight * ratio;
-				} else {
-					// Modo vertical: tamaño normal
-					canvas.width = 370 * ratio;
-					canvas.height = 220 * ratio;
-				}
+    if (window.innerWidth > window.innerHeight) {
+        // Modo horizontal: toda la pantalla
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    } else {
+        // Modo vertical: tamaño normal
+        canvas.width = 370;
+        canvas.height = 220;
+    }
 
-				canvas.getContext("2d").scale(ratio, ratio); // Escalar para mantener calidad
-				ctx.scale(1, 1);
-			}
+    // Restauramos el estado del contexto para evitar desfasajes
+    const ctx = canvas.getContext("2d");
+    ctx.scale(1, 1);
+}
 
 			// window.onload = function () {
 			// 	const canvas = document.getElementById("signature-pad");
