@@ -972,6 +972,7 @@
 			let signaturePad;
 			let firmaBase64 = "";
 
+			let lastOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
 
 
 			window.onload = function () {
@@ -984,23 +985,40 @@
 				});
 
 				// Ajustar tamaño del canvas cuando cambie la orientación
-				window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
+				window.addEventListener("resize", () => 
+				ajustarTamanioCanvas(canvas)
+				
+			);
 			};
 
 			// Función para ajustar el tamaño del canvas según la orientación
 			function ajustarTamanioCanvas(canvas) {
+				
+				let newOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+
+if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
+	lastOrientation = newOrientation;
+	
+	if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
+		window.scrollTo({
+			top: document.body.scrollHeight,
+			behavior: "smooth"
+		});
+	}
+}
+				
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
 				if (window.innerWidth > window.innerHeight) {
 					// Modo horizontal: ocupar toda la pantalla
+					// con esto, el trazo esta desfasado					
 					// alert(window.innerWidth);
 					// alert(window.innerHeight);
-
-					canvas.width = 800 * ratio;
-					canvas.height = 280 * ratio;
-					
 					// canvas.width = window.innerWidth * ratio;
 					// canvas.height = window.innerHeight * ratio;
+					canvas.width = 800 * ratio;
+					canvas.height = 280 * ratio;
+				
 				} else {
 					// Modo vertical: tamaño normal
 					canvas.width = 370 * ratio;
