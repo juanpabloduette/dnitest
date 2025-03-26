@@ -995,17 +995,17 @@
 			// Función para ajustar el tamaño del canvas según la orientación
 			function ajustarTamanioCanvas(canvas) {
 				
-				// let newOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+				let newOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
 
-				// if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
-				// 	lastOrientation = newOrientation;
+				if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
+					lastOrientation = newOrientation;
 					
-				// 	if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
-				// 		window.scrollTo({
-				// 			top: document.body.scrollHeight
-				// 		});
-				// 	}
-				// }
+					if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
+						window.scrollTo({
+							top: document.body.scrollHeight
+						});
+					}
+				}
 				
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
