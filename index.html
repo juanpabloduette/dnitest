@@ -982,9 +982,9 @@
 
 // Función para inicializar el canvas
 function inicializarCanvas(canvas) {
-    // Asegurarnos de que el canvas tenga el tamaño adecuado desde el principio
+    // Ajustar el tamaño del canvas al cargar la página
     ajustarTamanioCanvas(canvas);
-    
+
     // Creamos una nueva instancia de SignaturePad
     signaturePad = new SignaturePad(canvas, {
         backgroundColor: "transparent",
@@ -996,25 +996,21 @@ function inicializarCanvas(canvas) {
 function ajustarTamanioCanvas(canvas) {
     const ratio = Math.max(window.devicePixelRatio || 1, 1);
     
-    // Si estamos en modo horizontal, ajustamos el canvas a toda la pantalla
+    // Ajustar el canvas para modo horizontal
     if (window.innerWidth > window.innerHeight) {
         canvas.width = window.innerWidth * ratio;
         canvas.height = window.innerHeight * ratio;
     } else {
-        // En modo vertical, establecemos un tamaño fijo
+        // Ajustar el canvas para modo vertical
         canvas.width = 370 * ratio;
         canvas.height = 220 * ratio;
     }
 
-    // Limpiamos el canvas para evitar efectos residuales
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Volvemos a crear la instancia de SignaturePad
-    signaturePad.clear();
-    signaturePad = new SignaturePad(canvas, {
-        backgroundColor: "transparent",
-        penColor: "#dfdfdf",
-    });
+    // Escalamos el contexto del canvas para mantener la calidad
+    const ctx = canvas.getContext("2d");
+    ctx.scale(ratio, ratio);
+
+    // Evitamos que el trazo se vea desfasado, simplemente dejamos el contexto como está
 }
 
 			// window.onload = function () {
