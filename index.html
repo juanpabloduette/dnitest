@@ -1001,6 +1001,7 @@
 					lastOrientation = newOrientation;
 					
 					if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
+						window.scrollTo(0, 1)
 						window.scrollTo({
 							top: document.body.scrollHeight,
 							behavior: "smooth"
