@@ -995,26 +995,22 @@
 			// Función para ajustar el tamaño del canvas según la orientación
 			function ajustarTamanioCanvas(canvas) {
 				
-				let newOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+				// let newOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
 
-				if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
-					lastOrientation = newOrientation;
+				// if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
+				// 	lastOrientation = newOrientation;
 					
-					if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
-						// window.scrollTo(0, 1)
-						window.scrollTo({
-							top: document.body.scrollHeight
-						});
-					}
-				}
+				// 	if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
+				// 		window.scrollTo({
+				// 			top: document.body.scrollHeight
+				// 		});
+				// 	}
+				// }
 				
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
 				if (window.innerWidth > window.innerHeight) {
 					// Modo horizontal: ocupar toda la pantalla
-					// con esto, el trazo esta desfasado					
-					// alert(window.innerWidth);
-					// alert(window.innerHeight);
 					// canvas.width = window.innerWidth * ratio;
 					// canvas.height = window.innerHeight * ratio;
 					canvas.width = 800 * ratio;
