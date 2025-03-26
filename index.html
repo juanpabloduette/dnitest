@@ -976,46 +976,45 @@
     const canvas = document.getElementById("signature-pad");
     inicializarCanvas(canvas);
 
-    window.addEventListener("resize", () => {
-        ajustarTamanioCanvas(canvas);
-    });
+    // Ajustar tamaño del canvas cuando cambie la orientación
+    window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
 };
 
-// Función para inicializar y resetear el canvas correctamente
+// Función para inicializar el canvas
 function inicializarCanvas(canvas) {
+    // Asegurarnos de que el canvas tenga el tamaño adecuado desde el principio
+    ajustarTamanioCanvas(canvas);
+    
+    // Creamos una nueva instancia de SignaturePad
     signaturePad = new SignaturePad(canvas, {
         backgroundColor: "transparent",
-        penColor: "#dfdfdf",
+        penColor: "#dfdfdf", // Color del trazo
     });
-    ajustarTamanioCanvas(canvas);
 }
 
 // Función para ajustar el tamaño del canvas correctamente
 function ajustarTamanioCanvas(canvas) {
-    const ctx = canvas.getContext("2d");
     const ratio = Math.max(window.devicePixelRatio || 1, 1);
-
-    // Guardamos la firma actual antes de redimensionar
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-    // Ajustamos el tamaño del canvas sin escalado acumulativo
+    
+    // Si estamos en modo horizontal, ajustamos el canvas a toda la pantalla
     if (window.innerWidth > window.innerHeight) {
-        // Modo horizontal: ocupar toda la pantalla
         canvas.width = window.innerWidth * ratio;
         canvas.height = window.innerHeight * ratio;
     } else {
-        // Modo vertical: tamaño normal
+        // En modo vertical, establecemos un tamaño fijo
         canvas.width = 370 * ratio;
         canvas.height = 220 * ratio;
     }
 
-    ctx.scale(ratio, ratio); // Aplicamos el escalado correcto
-
-    // Restauramos la firma después de redimensionar
-    ctx.putImageData(imageData, 0, 0);
-
-    // Resetear SignaturePad para evitar problemas de detección de eventos
+    // Limpiamos el canvas para evitar efectos residuales
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Volvemos a crear la instancia de SignaturePad
     signaturePad.clear();
+    signaturePad = new SignaturePad(canvas, {
+        backgroundColor: "transparent",
+        penColor: "#dfdfdf",
+    });
 }
 
 			// window.onload = function () {
