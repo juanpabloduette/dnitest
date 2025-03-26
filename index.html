@@ -973,47 +973,93 @@
 			let firmaBase64 = "";
 
 			window.onload = function () {
-				const canvas = document.getElementById("signature-pad");
-				ajustarTamanioCanvas(canvas);
+    const canvas = document.getElementById("signature-pad");
+    inicializarCanvas(canvas);
 
-				signaturePad = new SignaturePad(canvas, {
-					backgroundColor: "transparent",
-					penColor: "#dfdfdf", // Cambio de color del trazo
-				});
+    window.addEventListener("resize", () => {
+        ajustarTamanioCanvas(canvas);
+    });
+};
 
-				// Ajustar tamaño del canvas cuando cambie la orientación
-				window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
-			};
+// Función para inicializar y resetear el canvas correctamente
+function inicializarCanvas(canvas) {
+    signaturePad = new SignaturePad(canvas, {
+        backgroundColor: "transparent",
+        penColor: "#dfdfdf",
+    });
+    ajustarTamanioCanvas(canvas);
+}
 
-			// Función para ajustar el tamaño del canvas según la orientación
-			function ajustarTamanioCanvas(canvas) {
-				const ratio = Math.max(window.devicePixelRatio || 1, 1);
+// Función para ajustar el tamaño del canvas correctamente
+function ajustarTamanioCanvas(canvas) {
+    const ctx = canvas.getContext("2d");
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
-				if (window.innerWidth > window.innerHeight) {
-					// Modo horizontal: ocupar toda la pantalla
-					canvas.width = window.innerWidth * ratio;
-					canvas.height = window.innerHeight * ratio;
-				} else {
-					// Modo vertical: tamaño normal
-					canvas.width = 370 * ratio;
-					canvas.height = 220 * ratio;
-				}
+    // Guardamos la firma actual antes de redimensionar
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-				canvas.getContext("2d").scale(ratio, ratio); // Escalar para mantener calidad
+    // Ajustamos el tamaño del canvas sin escalado acumulativo
+    if (window.innerWidth > window.innerHeight) {
+        // Modo horizontal: ocupar toda la pantalla
+        canvas.width = window.innerWidth * ratio;
+        canvas.height = window.innerHeight * ratio;
+    } else {
+        // Modo vertical: tamaño normal
+        canvas.width = 370 * ratio;
+        canvas.height = 220 * ratio;
+    }
+
+    ctx.scale(ratio, ratio); // Aplicamos el escalado correcto
+
+    // Restauramos la firma después de redimensionar
+    ctx.putImageData(imageData, 0, 0);
+
+    // Resetear SignaturePad para evitar problemas de detección de eventos
+    signaturePad.clear();
+}
+
+			// window.onload = function () {
+			// 	const canvas = document.getElementById("signature-pad");
+			// 	ajustarTamanioCanvas(canvas);
+
+			// 	signaturePad = new SignaturePad(canvas, {
+			// 		backgroundColor: "transparent",
+			// 		penColor: "#dfdfdf", // Cambio de color del trazo
+			// 	});
+
+			// 	// Ajustar tamaño del canvas cuando cambie la orientación
+			// 	window.addEventListener("resize", () => ajustarTamanioCanvas(canvas));
+			// };
+
+			// // Función para ajustar el tamaño del canvas según la orientación
+			// function ajustarTamanioCanvas(canvas) {
+			// 	const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+			// 	if (window.innerWidth > window.innerHeight) {
+			// 		// Modo horizontal: ocupar toda la pantalla
+			// 		canvas.width = window.innerWidth * ratio;
+			// 		canvas.height = window.innerHeight * ratio;
+			// 	} else {
+			// 		// Modo vertical: tamaño normal
+			// 		canvas.width = 370 * ratio;
+			// 		canvas.height = 220 * ratio;
+			// 	}
+
+			// 	canvas.getContext("2d").scale(ratio, ratio); // Escalar para mantener calidad
 
 
-				// // Si ya existe una instancia de SignaturePad, la eliminamos
-				// if (signaturePad) {
-				//     signaturePad.off();  
-				//     signaturePad = null;  
-				// }
+			// 	// // Si ya existe una instancia de SignaturePad, la eliminamos
+			// 	// if (signaturePad) {
+			// 	//     signaturePad.off();  
+			// 	//     signaturePad = null;  
+			// 	// }
 
-				// Creamos una nueva instancia de SignaturePad con el canvas actualizado
-				// signaturePad = new SignaturePad(canvas, {
-				//     backgroundColor: "transparent",
-				//     penColor: "#dfdfdf",
-				// });
-			}
+			// 	// Creamos una nueva instancia de SignaturePad con el canvas actualizado
+			// 	// signaturePad = new SignaturePad(canvas, {
+			// 	//     backgroundColor: "transparent",
+			// 	//     penColor: "#dfdfdf",
+			// 	// });
+			// }
 
 			// Borrar firma
 			function clearSignature() {
