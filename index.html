@@ -997,16 +997,16 @@
 				
 				let newOrientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
 
-if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
-	lastOrientation = newOrientation;
-	
-	if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
-		window.scrollTo({
-			top: document.body.scrollHeight,
-			behavior: "smooth"
-		});
-	}
-}
+				if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientación
+					lastOrientation = newOrientation;
+					
+					if (newOrientation === "landscape") { // Si está en horizontal, hace scroll abajo
+						window.scrollTo({
+							top: document.body.scrollHeight,
+							behavior: "smooth"
+						});
+					}
+				}
 				
 				const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
@@ -1018,7 +1018,7 @@ if (newOrientation !== lastOrientation) { // Solo ejecuta si cambia la orientaci
 					// canvas.width = window.innerWidth * ratio;
 					// canvas.height = window.innerHeight * ratio;
 					canvas.width = 800 * ratio;
-					canvas.height = 280 * ratio;
+					canvas.height = 220 * ratio;
 				
 				} else {
 					// Modo vertical: tamaño normal
