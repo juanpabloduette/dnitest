@@ -1,7 +1,7 @@
 {
     "name": "Mi App Web",
     "short_name": "AppWeb",
-    "start_url": "/",
+    "start_url": "/dnitest",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000"
