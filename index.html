@@ -972,6 +972,7 @@
 			let signaturePad;
 			let firmaBase64 = "";
 
+
 			window.onload = function () {
     const canvas = document.getElementById("signature-pad");
     inicializarCanvas(canvas);
@@ -986,7 +987,8 @@ function inicializarCanvas(canvas) {
         backgroundColor: "transparent",
         penColor: "#dfdfdf", // Color del trazo
     });
-    ajustarTamanioCanvas(canvas);  // Ajustar el tamaño del canvas cuando cargue la página
+
+    ajustarTamanioCanvas(canvas);  // Ajustar el tamaño del canvas al cargar la página
 }
 
 // Función para ajustar el tamaño del canvas correctamente
@@ -996,20 +998,24 @@ function ajustarTamanioCanvas(canvas) {
     // Ajustamos el tamaño del canvas según la orientación del dispositivo
     if (window.innerWidth > window.innerHeight) {
         // Modo horizontal: ocupar toda la pantalla
-        canvas.width = window.innerWidth * ratio;
-        canvas.height = window.innerHeight * ratio;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     } else {
         // Modo vertical: tamaño fijo
-        canvas.width = 370 * ratio;
-        canvas.height = 220 * ratio;
+        canvas.width = 370;
+        canvas.height = 220;
     }
 
-    // Limpiamos el canvas para evitar residuos
+    // Ajustamos la resolución del canvas con respecto a la escala del dispositivo
+    canvas.width *= ratio;
+    canvas.height *= ratio;
+
+    // Limpiamos el canvas para evitar residuos de trazos anteriores
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Restauramos el tamaño adecuado para el `SignaturePad`
-    signaturePad.clear();  // Limpiamos el pad para que la firma no se mezcle con las configuraciones anteriores
+    // Volvemos a configurar el SignaturePad con las nuevas dimensiones
+    signaturePad.clear();
 }
 
 			// window.onload = function () {
