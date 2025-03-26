@@ -983,20 +983,20 @@
 
 // Función para inicializar el canvas y la firma
 function inicializarCanvas(canvas) {
-    // Establecer las dimensiones iniciales del canvas y crear el SignaturePad
     signaturePad = new SignaturePad(canvas, {
         backgroundColor: "transparent",
         penColor: "#dfdfdf", // Color del trazo
     });
 
-    ajustarTamanioCanvas(canvas);  // Ajustamos el tamaño del canvas al cargar la página
+    // Ajustar el tamaño del canvas en el inicio
+    ajustarTamanioCanvas(canvas);
 }
 
 // Función para ajustar el tamaño del canvas correctamente
 function ajustarTamanioCanvas(canvas) {
     const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
-    // Ajustamos el tamaño del canvas según la orientación del dispositivo
+    // Redimensionamos el canvas dependiendo de la orientación
     if (window.innerWidth > window.innerHeight) {
         // Modo horizontal: ocupar toda la pantalla
         canvas.width = window.innerWidth;
@@ -1007,16 +1007,15 @@ function ajustarTamanioCanvas(canvas) {
         canvas.height = 220;
     }
 
-    // Aseguramos que las dimensiones del canvas sean correctas según la resolución del dispositivo
+    // Ajustamos el tamaño del canvas con la resolución del dispositivo
     canvas.width *= ratio;
     canvas.height *= ratio;
 
-    // Limpiamos el canvas para evitar residuos de trazos anteriores
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Ajustamos el contexto del canvas a las nuevas dimensiones
+    canvas.style.width = `${window.innerWidth}px`; // Ajustamos el ancho visual
+    canvas.style.height = `${window.innerHeight}px`; // Ajustamos el alto visual
 
-    // Mantener la firma intacta sin cambiar el SignaturePad
-    signaturePad.clear();
+    // **NO** limpiamos el canvas ni destruimos el SignaturePad, solo ajustamos el tamaño
 }
 
 			// window.onload = function () {
