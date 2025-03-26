@@ -992,7 +992,6 @@ function inicializarCanvas(canvas) {
 // Función para ajustar el tamaño del canvas correctamente
 function ajustarTamanioCanvas(canvas) {
     const ratio = Math.max(window.devicePixelRatio || 1, 1);
-    const ctx = canvas.getContext("2d");
 
     // Ajustamos el tamaño del canvas según la orientación del dispositivo
     if (window.innerWidth > window.innerHeight) {
@@ -1005,11 +1004,12 @@ function ajustarTamanioCanvas(canvas) {
         canvas.height = 220 * ratio;
     }
 
-    // Limpiamos el canvas
+    // Limpiamos el canvas para evitar residuos
+    const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Ajustamos el contexto para que los trazos sigan el tamaño correcto
-    ctx.scale(ratio, ratio);
+    // Restauramos el tamaño adecuado para el `SignaturePad`
+    signaturePad.clear();  // Limpiamos el pad para que la firma no se mezcle con las configuraciones anteriores
 }
 
 			// window.onload = function () {
