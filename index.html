@@ -859,9 +859,10 @@
 								
 								
 								if (result) {
-									if(result.format === "PDF_417"){
-										
-									}
+									// if(result.format === "PDF_417"){
+									// 	alert("ES PDF147")
+									// }
+									alert(result.format);
 									// const datos = result.text; 
 									const datos = decodeURIComponent(result.text);
 									const partes = datos.split("@");
