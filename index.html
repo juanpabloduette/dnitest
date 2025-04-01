@@ -835,13 +835,7 @@
 
 			btnEscanear.addEventListener("click", () => {
 				btnEscanear.disabled = true;
-				navigator.mediaDevices.enumerateDevices().then((devices) => {
-    devices.forEach((device) => {
-        if (device.kind === "videoinput") {
-            alert("Cámara encontrada:", device.label, device.deviceId);
-        }
-    });
-});
+				alert("ZXing cargado:", typeof codeReader !== "undefined");
 				navigator.mediaDevices
 					.getUserMedia({
 						video: {
