@@ -835,6 +835,13 @@
 
 			btnEscanear.addEventListener("click", () => {
 				btnEscanear.disabled = true;
+				navigator.mediaDevices.enumerateDevices().then((devices) => {
+    devices.forEach((device) => {
+        if (device.kind === "videoinput") {
+            alert("Cámara encontrada:", device.label, device.deviceId);
+        }
+    });
+});
 				navigator.mediaDevices
 					.getUserMedia({
 						video: {
