@@ -835,7 +835,7 @@
 
 			btnEscanear.addEventListener("click", () => {
 				btnEscanear.disabled = true;
-				alert("ZXing cargado:", typeof codeReader !== "undefined");
+				alert("ZXing cargado: " + (typeof codeReader !== "undefined"));
 				navigator.mediaDevices
 					.getUserMedia({
 						video: {
