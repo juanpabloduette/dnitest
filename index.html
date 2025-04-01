@@ -839,10 +839,9 @@
 					.getUserMedia({
 						video: {
 							facingMode: "environment",
-							width: { ideal: 1280 },
-							height: { ideal: 720 },
-							focusMode: "continuous"
-							},
+							width: { ideal: 1920 }, // Aumenta la resolución
+							height: { ideal: 1080 },
+						},
 					})
 					.then((s) => {
 						stream = s;
@@ -857,8 +856,11 @@
 							undefined,
 							videoElement,
 							(result, err) => {
+								
+								
 								if (result) {
-									// const datos = result.text; 
+									if(result.format === "PDF_417"){
+										// const datos = result.text; 
 									const datos = decodeURIComponent(result.text);
 									const partes = datos.split("@");
 
@@ -911,6 +913,8 @@
 									detenerEscaneo();
 									codeReader.reset();
 									document.getElementById("signature-container").style.display = "flex";
+									}
+									
 								}
 							}
 						);
