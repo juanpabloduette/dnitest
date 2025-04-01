@@ -835,7 +835,9 @@
 
 			btnEscanear.addEventListener("click", () => {
 				btnEscanear.disabled = true;
-				alert("ZXing cargado: " + (typeof codeReader !== "undefined"));
+				setTimeout(() => {
+					alert("Resolución: " + videoElement.videoWidth + "x" + videoElement.videoHeight);
+				}, 3000);
 				navigator.mediaDevices
 					.getUserMedia({
 						video: {
