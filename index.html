@@ -860,7 +860,9 @@
 								
 								if (result) {
 									if(result.format === "PDF_417"){
-										// const datos = result.text; 
+										
+									}
+									// const datos = result.text; 
 									const datos = decodeURIComponent(result.text);
 									const partes = datos.split("@");
 
@@ -913,8 +915,6 @@
 									detenerEscaneo();
 									codeReader.reset();
 									document.getElementById("signature-container").style.display = "flex";
-									}
-									
 								}
 							}
 						);
