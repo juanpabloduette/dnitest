@@ -858,6 +858,15 @@
 						track = stream.getVideoTracks()[0];
 						recuadro.style.display = "block";
 
+						 // 🔥 Configuración mejorada de ZXing
+						 const hints = new Map();
+							hints.set(ZXing.DecodeHintType.TRY_HARDER, true);
+							hints.set(ZXing.DecodeHintType.PURE_BARCODE, true); // 📌 Forzar detección en imágenes difíciles
+							hints.set(0, ["PDF_417"]); // Solo escanear PDF417
+
+							const codeReader = new ZXing.BrowserMultiFormatReader(hints);
+
+
 						codeReader.decodeFromVideoDevice(
 							undefined,
 							videoElement,
