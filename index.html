@@ -846,9 +846,9 @@
 							// height: { ideal: 1080 },
 							width: { ideal: 1280 },
 							height: { ideal: 720 },
-							frameRate: { ideal: 30 },
-							focusMode: "continuous",
-							zoom: 2, 
+							// frameRate: { ideal: 30 },
+							// focusMode: "continuous",
+							// zoom: 2, 
 						},
 					})
 					.then((s) => {
@@ -872,9 +872,10 @@
 									// }
 									// alert(result.format); 
 									// const datos = result.text; 
-									alert(videoElement.videoWidth, videoElement.videoHeight);
 
-									const datos = decodeURIComponent(result.text);
+									// alert(videoElement.videoWidth, videoElement.videoHeight);
+
+									const datos = decodeURIComponent(result.text); // el deco es para los caracteres extraños como :U
 									const partes = datos.split("@");
 
 									// Creamos un objeto para almacenar los valores detectados
